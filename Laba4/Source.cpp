@@ -1,3 +1,4 @@
+//вариант 14
 #include <iostream>
 #include <fstream>
 

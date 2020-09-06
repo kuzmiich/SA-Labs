@@ -1,4 +1,4 @@
-// вариант 14
+// Variant 14
 #include<iostream>
 #include<ctime>
 
@@ -32,7 +32,7 @@ int main()
 			min = arr[i];
 			min_ind = i;
 		}
-		else if(arr[i] > max)
+		else if (arr[i] > max)
 		{
 			max = arr[i];
 			max_ind = i;
