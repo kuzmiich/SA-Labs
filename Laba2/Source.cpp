@@ -2,7 +2,7 @@
 #include<iostream>
 #include<fstream>
 using namespace std;
-enum{ Enter = 1, Read, Sorting, Search };
+enum{ Enter = 1, Read, Sorting };
 
 const int n = 40;
 const int name_size = 20, number_size = 6, type_size = 5;
@@ -109,9 +109,6 @@ int main()
             system("pause");
             break;
         }
-        case Search:
-            search_identical(air, size);
-            break;
         default:
             break;
         }
@@ -123,9 +120,8 @@ int main()
 void menu()
 {
     cout << "1.Enter data to file\n";
-    cout << "2.Read data from file\n";
+    cout << "2.Write data from file\n";
     cout << "3.Sorting of the flights in alphabetical order\n";
-    cout << "4.Search for flight numbers and aircraft types\n";
     cout << "0.Exit\n";
 }
 
