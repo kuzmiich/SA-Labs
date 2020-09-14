@@ -5,6 +5,8 @@
 
 using namespace std;
 
+void generate_arr(int*, int);
+
 void buble_sort(int* , int);
 
 void max_abs_index_seqen(int*, int);
@@ -19,14 +21,7 @@ int main()
 	cin >> len;
 	int* arr = new int[len];
 
-	int lower = -100, upper = 100;
-	for (int i = 0; i < len; i++)
-	{
-		arr[i] = lower + rand() / (upper - lower);
-		cout << arr[i] << " ";
-	}
-	//--generate array
-	cout << "\n";
+	generate_arr(arr, len);
 
 	buble_sort(arr, len);
 
@@ -38,6 +33,17 @@ int main()
 	return 0;
 }
 
+void generate_arr(int* arr, int len)
+{
+	int lower = -100, upper = 100;
+	for (int i = 0; i < len; i++)
+	{
+		arr[i] = lower + rand() / (upper - lower);
+		cout << arr[i] << " ";
+	}
+	//--generate array
+	cout << "\n";
+}
 //bubble sorting
 void buble_sort(int* arr, int len)
 {

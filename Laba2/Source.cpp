@@ -20,6 +20,7 @@ struct Aeroflot
         cout << endl;
     }
 };
+
 void menu();
 
 void entry_obj(Aeroflot* );
@@ -34,7 +35,7 @@ void enter_file_sort_obj(Aeroflot* arr, int size);
 
 int main()
 {
-    int size = 7;
+    int size = 2;
     Aeroflot* air = {};
     air = new Aeroflot[size];
     
@@ -57,7 +58,6 @@ int main()
 void entry_obj(Aeroflot* air)
 {
     cout << "Enter the name of your flight destination:\n";
-    cin.ignore();
     cin.getline(air->name, name_size, '\n');
     cout << "Enter your flight number:\n";
     cin.getline(air->number, number_size, '\n');
@@ -112,7 +112,6 @@ void search_identical(Aeroflot* air, int size)
 {
     char arr_new[n];
     cout << "Input name place: ";
-    cin.ignore();
     cin.getline(arr_new, n);
     system("cls");
 
@@ -128,7 +127,7 @@ void search_identical(Aeroflot* air, int size)
     }
     if (flag)
     {
-        cout << "There are no such flights";
+        cout << "There are no such flights\n";
     }
 }
 

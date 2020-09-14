@@ -57,6 +57,9 @@ point* make_list(int n)
 	return beg;
 }
 
+point* sort_insert(point* beg, int k)
+{
+}
 point* add_point(point* beg, int k)
 {
 	point* p = beg;//встали на первый элемент
@@ -101,13 +104,13 @@ point* del_point(point* beg, int k)
 
 	/*если такого элемента в списке нет, то возвращаем указатель на начало списка в качестве результата функции*/
 	if (p->next == 0) return beg;
-	point* r = p->next;//ставим указатель r на k-й элемент
-	p->next = r->next;//связываем k-1 и k+1 элемент
-	delete r;//удаляем k-й элемент из памяти
+	point* r = p->next;
+	p->next = r->next;
+	delete r;
 	return beg;
 }
 
-void print_list(point* beg)
+void print(point* beg)
 {
 	point* p = beg;
 	while (p != 0)
@@ -149,9 +152,13 @@ int main()
 			break;
 		case 4:
 			cout << "Вывод элементов списка.\n";
-			print_list(beg);
+			print(beg);
 			break;
 		case 5:
+			cout << "Сортировка элементов";
+			sort_insert(beg, k);
+			break;
+		case 6:
 			flag = false;
 			break;
 		default:
