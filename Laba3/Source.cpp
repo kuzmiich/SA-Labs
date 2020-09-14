@@ -7,7 +7,7 @@ using namespace std;
 
 struct point
 {
-	int data; //информационное поле
+	string data; //информационное поле
 	point* next; //адресное поле
 };
 
@@ -17,7 +17,8 @@ void menu()
 	cout << "2.Добавление элемента в список.\n";
 	cout << "3.Удаление элемента из списка.\n";
 	cout << "4.Вывод списка.\n";
-	cout << "5.Выход.\n";
+	cout << "5.Сортировка элементов по алфавиту и по длинне строки\n";
+	cout << "6.Выход.\n";
 }
 
 int input()
@@ -39,9 +40,7 @@ point* make_list(int n)
 	point* beg;
 	point* p, * r;//вспомогательные указатели
 	beg = new(point);//выделяем память под первый элемент
-	cout << "Вводим значение информационного поля.\n";
-	cin >> beg->data;//вводим значение информационного поля
-	beg->next = 0;//обнуляем адресное поле
+
 	//ставим на этот элемент указатель p (последний элемент)
 	p = beg;
 	for (int i = 0; i < n; i++)
@@ -59,12 +58,14 @@ point* make_list(int n)
 
 point* sort_insert(point* beg, int k)
 {
+	return beg;
 }
+
 point* add_point(point* beg, int k)
 {
 	point* p = beg;//встали на первый элемент
 	point* New = new(point);//создали новый элемент
-	cout << "Key?"; cin >> New->data;
+	cin >> New->data;
 
 	if (k == 0)
 	{
@@ -118,7 +119,9 @@ void print(point* beg)
 		cout << p->data << "\t";
 		p = p->next;
 	}
+	cout << "\n";
 	system("pause");
+
 }
 
 int main()
