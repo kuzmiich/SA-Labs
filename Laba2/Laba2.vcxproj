@@ -138,7 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="struct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="aeroflot.txt" />

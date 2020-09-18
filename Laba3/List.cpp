@@ -56,8 +56,12 @@ point* make_list(int n)
 	return beg;
 }
 
-point* sort_insert(point* beg, int k)
+point* sort_insert(point* beg, int len)
 {
+	for (int i = 0; i < len; i++)
+	{
+
+	}
 	return beg;
 }
 
@@ -128,7 +132,7 @@ int main()
 {
 	system("chcp 1251 > nul");
 	point* beg = nullptr;
-	int k;
+	int k, len;
 	bool flag = true;
 	while (flag)
 	{
@@ -141,6 +145,7 @@ int main()
 		case 1:
 			cout << "—формируйте список.¬ведите количество элементво списка.\n";
 			k = abs(input_num());
+			len = k;
 			beg = make_list(k);
 			break;
 		case 2:
@@ -149,7 +154,7 @@ int main()
 			add_point(beg, k);
 			break;
 		case 3:
-			cout << "¬ведите список, который вы хотите удалить.\n";
+			cout << "¬ведите номер списка, который вы хотите удалить.\n";
 			k = abs(input_num());
 			del_point(beg, k);
 			break;
@@ -159,7 +164,7 @@ int main()
 			break;
 		case 5:
 			cout << "—ортировка элементов";
-			sort_insert(beg, k);
+			sort_insert(beg, len);
 			break;
 		case 6:
 			flag = false;

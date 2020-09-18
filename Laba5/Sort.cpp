@@ -7,7 +7,7 @@ using namespace std;
 
 void generate_arr(int*, int);
 
-void buble_sort(int* , int);
+void buble_sort(int*, int);
 
 void max_abs_index_seqen(int*, int);
 
@@ -35,7 +35,7 @@ int main()
 
 void generate_arr(int* arr, int len)
 {
-	int lower = -100, upper = 100;
+	int lower = 100, upper = 1000, step = 100;
 	for (int i = 0; i < len; i++)
 	{
 		arr[i] = lower + rand() / (upper - lower);
@@ -113,9 +113,9 @@ void max_abs_index_binary(int* arr, int len)
 		}
 	}
 
-	if (flag) 
+	if (flag)
 		cout << "Index element " << max << " in array equal = " << mid << endl;
-	else 
+	else
 		cout << "Sorry, but there is no such element in the array\n";
 
 	cout << "Count of iterations: " << count << endl;
