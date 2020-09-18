@@ -5,20 +5,20 @@
 
 using namespace std;
 
-struct point
+struct List
 {
 	string data; //информационное поле
-	point* next; //адресное поле
+	List* next; //адресное поле
 };
 
 void menu()
 {
-	cout << "1.Создание списка.\n";
-	cout << "2.Добавление элемента в список.\n";
-	cout << "3.Удаление элемента из списка.\n";
-	cout << "4.Вывод списка.\n";
-	cout << "5.Сортировка элементов по алфавиту и по длинне строки\n";
-	cout << "6.Выход.\n";
+	cout << "1.Create list\n";
+	cout << "2.Add element for list\n";
+	cout << "3.Delete element for list\n";
+	cout << "4.Output list\n";
+	cout << "5.Sort items alphabetically and by the length of the string\n";
+	cout << "6.Exit\n";
 }
 
 int input()
@@ -35,18 +35,18 @@ int input_num()
 	return atoi(n);
 }
 
-point* make_list(int n)
+List* make_list(int n)
 {
-	point* beg;
-	point* p, * r;//вспомогательные указатели
-	beg = new(point);//выделяем память под первый элемент
+	List* beg;
+	List* p, * r;//вспомогательные указатели
+	beg = new(List);//выделяем память под первый элемент
 
 	//ставим на этот элемент указатель p (последний элемент)
 	p = beg;
 	for (int i = 0; i < n; i++)
 	{
-		r = new(point);//создаем новый элемент
-		cout << "Введите " << i + 1 << " число:";
+		r = new(List);//создаем новый элемент
+		cout << "Введите " << i + 1 << " string:";
 		cin >> r->data;
 		r->next = 0;
 		p->next = r;//связываем p и r
@@ -56,19 +56,22 @@ point* make_list(int n)
 	return beg;
 }
 
-point* sort_insert(point* beg, int len)
+List* sort_insert(List* beg, int len)
 {
-	for (int i = 0; i < len; i++)
+	List* res = new List;
+	res->next = NULL;
+	res->data = beg->data;
+	if (beg->data == )
 	{
 
 	}
-	return beg;
+	return res;
 }
 
-point* add_point(point* beg, int k)
+List* add_point(List* beg, int k)
 {
-	point* p = beg;//встали на первый элемент
-	point* New = new(point);//создали новый элемент
+	List* p = beg;//встали на первый элемент
+	List* New = new(List);//создали новый элемент
 	cin >> New->data;
 
 	if (k == 0)
@@ -91,10 +94,10 @@ point* add_point(point* beg, int k)
 	return beg;
 }
 
-point* del_point(point* beg, int k)
+List* del_point(List* beg, int k)
 //удаление элемента с номером k из списка
 {
-	point* p = beg;
+	List* p = beg;
 	if (k == 0)//удаление первого элемента
 	{
 		beg = beg->next;
@@ -109,15 +112,15 @@ point* del_point(point* beg, int k)
 
 	/*если такого элемента в списке нет, то возвращаем указатель на начало списка в качестве результата функции*/
 	if (p->next == 0) return beg;
-	point* r = p->next;
+	List* r = p->next;
 	p->next = r->next;
 	delete r;
 	return beg;
 }
 
-void print(point* beg)
+void print(List* beg)
 {
-	point* p = beg;
+	List* p = beg;
 	while (p != 0)
 	{
 		cout << p->data << "\t";
@@ -131,7 +134,7 @@ void print(point* beg)
 int main()
 {
 	system("chcp 1251 > nul");
-	point* beg = nullptr;
+	List* beg = nullptr;
 	int k, len;
 	bool flag = true;
 	while (flag)
