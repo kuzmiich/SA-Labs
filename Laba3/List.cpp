@@ -46,7 +46,7 @@ List* make_list(int n)
 	for (int i = 0; i < n; i++)
 	{
 		r = new(List);//создаем новый элемент
-		cout << "Введите " << i + 1 << " string:";
+		cout << "Input " << i + 1 << " string:";
 		cin >> r->data;
 		r->next = 0;
 		p->next = r;//связываем p и r
@@ -61,9 +61,9 @@ List* sort_insert(List* beg, int len)
 	List* res = new List;
 	res->next = NULL;
 	res->data = beg->data;
-	if (beg->data == )
+	while (res->data.find(res->data))
 	{
-
+		res->next;
 	}
 	return res;
 }
@@ -146,27 +146,27 @@ int main()
 		switch (key)
 		{
 		case 1:
-			cout << "Сформируйте список.Введите количество элементво списка.\n";
+			cout << "Create a list.Enter the number of items in the list:\n";
 			k = abs(input_num());
 			len = k;
 			beg = make_list(k);
 			break;
 		case 2:
-			cout << "Введите номер списка, который вы хотите добавить.\n";
+			cout << "Enter the number of the list you want to add:\n";
 			k = abs(input_num());
 			add_point(beg, k);
 			break;
 		case 3:
-			cout << "Введите номер списка, который вы хотите удалить.\n";
+			cout << "Enter the number of the list you want to delete:\n";
 			k = abs(input_num());
 			del_point(beg, k);
 			break;
 		case 4:
-			cout << "Вывод элементов списка.\n";
+			cout << "Output elements of the list:\n";
 			print(beg);
 			break;
 		case 5:
-			cout << "Сортировка элементов";
+			cout << "Sort elements:\n";
 			sort_insert(beg, len);
 			break;
 		case 6:
