@@ -50,7 +50,7 @@ int main()
     delete[] air;
 	return 0;
 }
-
+//filling in an object
 void entry_obj(Aeroflot* air)
 {
     cout << "Enter the name of your flight destination:\n";
@@ -83,7 +83,7 @@ void sort_name(Aeroflot* air, int size)
     cout << "Count changes: " << change << endl;
     cout << "Selection sorting completed successfully\n";
 }
-
+//search_identical
 void search_identical(Aeroflot* air, int size)
 {
     char arr_new[name_size] = {};
@@ -106,7 +106,7 @@ void search_identical(Aeroflot* air, int size)
         cout << "There are no such flights\n";
     }
 }
-
+//enter obj to file
 void enter_file_obj(Aeroflot* air, int size, string path)
 {
     fstream out(path, ios_base::out | ios_base::trunc);
