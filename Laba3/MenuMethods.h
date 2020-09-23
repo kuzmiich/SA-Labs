@@ -30,5 +30,4 @@ static struct MenuMethods
 		return atoi(n);
 	}
 };
-
 #endif

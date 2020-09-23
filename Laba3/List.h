@@ -12,7 +12,7 @@ static struct List
 		string data; //информационное поле
 		List* next; //адресное поле
 	
-	//create
+	//create start list
 	static List* make_list(int n)
 	{
 		List* beg;
@@ -49,7 +49,7 @@ static struct List
 			}
 		}
 	}
-	//Add
+	//Add element to list
 	static List* add_point(List* beg, int k)
 	{
 		List* p = beg;
@@ -98,7 +98,7 @@ static struct List
 		delete r;
 		return beg;
 	}
-
+	//print list
 	static void print(List* beg)
 	{
 		List* p = beg;
@@ -111,5 +111,4 @@ static struct List
 		system("pause");
 	}
 };
-
 #endif
