@@ -4,7 +4,6 @@
 using namespace std;
 enum{ Enter = 1, Read, Sorting };
 
-const int n = 40;
 const int name_size = 20, number_size = 6, type_size = 5;
 
 struct Aeroflot
@@ -29,9 +28,7 @@ void sort_name(Aeroflot* , int );
 
 void search_identical(Aeroflot* , int );
 
-void enter_file_obj(Aeroflot*, int);
-
-void enter_file_sort_obj(Aeroflot* arr, int size);
+void enter_file_obj(Aeroflot*, int, string );
 
 int main()
 {
@@ -43,13 +40,15 @@ int main()
     {
         entry_obj(&air[i]);
     }
-    enter_file_obj(air, size);
+    string path = "aeroflot.txt";
+    enter_file_obj(air, size, path);
 
     sort_name(air, size);
     
     search_identical(air, size);
 
-    enter_file_sort_obj(air, size);
+    string path2 = "aeroflot1.txt";
+    enter_file_obj(air, size, path2);
            
     delete[] air;
 	return 0;
@@ -58,11 +57,11 @@ int main()
 void entry_obj(Aeroflot* air)
 {
     cout << "Enter the name of your flight destination:\n";
-    cin.getline(air->name, name_size, '\n');
+    cin.getline(air->name, name_size + 1, '\n');
     cout << "Enter your flight number:\n";
-    cin.getline(air->number, number_size, '\n');
+    cin.getline(air->number, number_size + 1, '\n');
     cout << "Enter aircraft type:\n";
-    cin.getline(air->type, type_size, '\n');
+    cin.getline(air->type, type_size + 1, '\n');
 }
 
 //selection sort
@@ -87,32 +86,12 @@ void sort_name(Aeroflot* air, int size)
     cout << "Count changes: " << change << endl;
     cout << "Selection sorting completed successfully\n";
 }
-void enter_file_obj(Aeroflot* air, int size)
-{
-    fstream out("aeroflot.txt", ios_base::out | ios_base::trunc);
-    if (!out.is_open())
-    {
-        cout << "The file cannot be opened or created\n";
-        exit(1);
-    }
-    for (int i = 0; i < size; i++)
-    {
-        out << "Name of flight destionation:";
-        out.write((char*)&air[i].name, sizeof air[i].name);
-        out << "Flight number:";
-        out.write((char*)&air[i].number, sizeof air[i].number);
-        out << "Aircraft type:";
-        out.write((char*)&air[i].type, sizeof air[i].type);
-        out << '\n';
-    }
-    out.close();
-}
 
 void search_identical(Aeroflot* air, int size)
 {
-    char arr_new[n];
+    char arr_new[name_size] = {};
     cout << "Input name place: ";
-    cin.getline(arr_new, n);
+    cin.getline(arr_new, name_size, '\n');
     system("cls");
 
     bool flag = true;
@@ -131,23 +110,23 @@ void search_identical(Aeroflot* air, int size)
     }
 }
 
-void enter_file_sort_obj(Aeroflot* air, int size)
+void enter_file_obj(Aeroflot* air, int size, string path)
 {
-    fstream fout("aeroflot1.txt", ios_base::out | ios_base::trunc);
-    if (!fout.is_open())
+    fstream out(path, ios_base::out | ios_base::trunc);
+    if (!out.is_open())
     {
         cout << "The file cannot be opened or created\n";
         exit(1);
     }
     for (int i = 0; i < size; i++)
     {
-        fout << "Name of flight destionation:";
-        fout.write((char*)&air[i].name, sizeof air[i].name);
-        fout << "Flight number:";
-        fout.write((char*)&air[i].number, sizeof air[i].number);
-        fout << "Aircraft type:";
-        fout.write((char*)&air[i].type, sizeof air[i].type);
-        fout << '\n';
+        out << "Name of flight destionation:";
+        out.write((char*)&air[i].name, sizeof air[i].name);
+        out << "Flight number:";
+        out.write((char*)&air[i].number, sizeof air[i].number);
+        out << "Aircraft type:";
+        out.write((char*)&air[i].type, sizeof air[i].type);
+        out << '\n';
     }
-    fout.close();
+    out.close();
 }
