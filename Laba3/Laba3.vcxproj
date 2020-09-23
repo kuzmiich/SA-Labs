@@ -141,6 +141,10 @@
   <ItemGroup>
     <ClCompile Include="List.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="List.h" />
+    <ClInclude Include="MenuMethods.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

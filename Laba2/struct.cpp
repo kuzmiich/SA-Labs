@@ -20,8 +20,6 @@ struct Aeroflot
     }
 };
 
-void menu();
-
 void entry_obj(Aeroflot* );
 
 void sort_name(Aeroflot* , int );
