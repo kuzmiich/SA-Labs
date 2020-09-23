@@ -18,40 +18,48 @@ Node* newNode(int key)
     return node;
 }
 
-void init(Node* root, int count)
+Node* init()
 {
     int start = -10, end = 10;
-    for (int i = 0; i < count; i++)
-    {
-        int random = start + rand() % (end - start);
-        if (i % 2 == 0)
-        {
-            root->right = newNode(random);
-        }
-        else
-        {
-            root->left = newNode(random);
-        }
-    }
+
+    int random = start + rand() % (end - start);
+    Node* root = newNode(random);
+
+    int random1 = start + rand() % (end - start);
+    root->left = newNode(random1);
+
+    int random2 = start + rand() % (end - start);
+    root->right = newNode(random2);
+
+    int random3 = start + rand() % (end - start);
+    root->left->left = newNode(random3);
+
+    int random4 = start + rand() % (end - start);
+    root->left->right = newNode(random4);
+
+    int random5 = start + rand() % (end - start);
+    root->right->left = newNode(random5);
+
+    int random6 = start + rand() % (end - start);
+    root->right->right = newNode(random6);
+
+    return root;
 }
 /* Function to find sum of all the elements*/
-int all_root(Node* root)
+int sum_node(Node* root)
 {
     if (root == NULL)
         return 0;
-    return root->key + all_root(root->left) + all_root(root->right);
+    return (root->key + sum_node(root->left) + sum_node(root->right));
 }
 
-/* Driver program to test above functions*/
 int main()
 {
     srand(time_t(NULL));
 
-    Node* root = new Node;
-    root->left = root->right = NULL;
-    int count = 10;
-    init(root, count);
-    int sum = all_root(root);
+    Node* root = init();
+
+    int sum = sum_node(root);
     cout << "Sum of all the elements is: " << sum << endl;
 
     return 0;
