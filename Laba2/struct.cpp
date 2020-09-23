@@ -31,8 +31,7 @@ void enter_file_obj(Aeroflot*, int, string );
 int main()
 {
     int size = 2;
-    Aeroflot* air = {};
-    air = new Aeroflot[size];
+    Aeroflot* air = new Aeroflot[size];
     
     for (int i = 0; i < size; i++)
     {

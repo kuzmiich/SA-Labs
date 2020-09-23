@@ -6,14 +6,18 @@ using namespace std;
 
 static struct List
 {
-	string data; //информационное поле
-	List* next; //адресное поле
-
+	private:
+		List* tmp = NULL;
+	public:
+		string data; //информационное поле
+		List* next; //адресное поле
+	
+	//create
 	static List* make_list(int n)
 	{
 		List* beg;
-		List* p, * r;//вспомогательные указатели
-		beg = new(List);//выделяем память под первый элемент
+		List* p, * r;
+		beg = new(List);
 
 		//ставим на этот элемент указатель p (последний элемент)
 		p = beg;
@@ -29,23 +33,27 @@ static struct List
 		}
 		return beg;
 	}
-
+	//buble sort
 	static List* sort_insert(List* beg, int len)
 	{
-		List* res = new List;
-		res->next = NULL;
-		res->data = beg->data;
-		while (res->data.find(res->data))
+		for (int i = 0; i < len; i++)
 		{
-			res->next;
+			for (int j = 0; j < len; j++)
+			{
+				if (beg->data < beg->next)
+				{
+					tmp = beg->next;
+					beg->data = beg->next;
+					beg->data = tmp;
+				}
+			}
 		}
-		return res;
 	}
-
+	//Add
 	static List* add_point(List* beg, int k)
 	{
-		List* p = beg;//встали на первый элемент
-		List* New = new(List);//создали новый элемент
+		List* p = beg;
+		List* New = new(List);
 		cin >> New->data;
 
 		if (k == 0)
@@ -57,7 +65,7 @@ static struct List
 
 		for (int i = 0; i < k - 1 && p != 0; i++)
 		{
-			p = p->next;//проходим по списку до(k-1) элемента или до конца
+			p = p->next;
 		}
 
 		if (p != 0)//если k-й элемент существует
@@ -67,25 +75,24 @@ static struct List
 		}
 		return beg;
 	}
-
+	//delete element with number (k)
 	static List* del_point(List* beg, int k)
-		//удаление элемента с номером k из списка
 	{
 		List* p = beg;
-		if (k == 0)//удаление первого элемента
+		if (k == 0)
 		{
 			beg = beg->next;
 			delete p;
 			return beg;
 		}
-		//проходим по списку до элемента с номером k-1
-		for (int i = 1; i < k && p->next != 0; i++)
+
+		for (int i = 1; i < k && p->next; i++)
 		{
 			p = p->next;
 		}
 
-		/*если такого элемента в списке нет, то возвращаем указатель на начало списка в качестве результата функции*/
-		if (p->next == 0) return beg;
+		if (p->next == 0) 
+			return beg;
 		List* r = p->next;
 		p->next = r->next;
 		delete r;
