@@ -7,44 +7,44 @@ using namespace std;
 static struct List
 {
 	private:
-		List* tmp = NULL;
+		//List* tmp = nullptr;
 	public:
-		string data; //информационное поле
-		List* next; //адресное поле
+		string data; // information field
+		List* next = nullptr; // address field
 	
-	//create start list
+	// create start list
 	static List* make_list(int n)
 	{
 		List* beg;
 		List* p, * r;
 		beg = new(List);
-
-		//ставим на этот элемент указатель p (последний элемент)
+		// putting the pointer p on the last element
 		p = beg;
 		for (int i = 0; i < n; i++)
 		{
-			r = new(List);//создаем новый элемент
+			r = new(List);
 			cout << "Input " << i + 1 << " string:";
 			cin >> r->data;
 			r->next = 0;
-			p->next = r;//связываем p и r
-			//ставим на r указатель p (последний элемент)
+			p->next = r;
+			// put the pointer p(the last element) on r
 			p = r;
 		}
 		return beg;
 	}
 	//buble sort
-	static List* sort_insert(List* beg, int len)
+	static void buble_sort(List* beg, int len)
 	{
-		for (int i = 0; i < len; i++)
+		List* first = beg, * second = beg;
+		while(first)
 		{
-			for (int j = 0; j < len; j++)
+			while(second)
 			{
-				if (beg->data < beg->next)
+				if (beg->data < beg->next->data)
 				{
-					tmp = beg->next;
-					beg->data = beg->next;
-					beg->data = tmp;
+					string tmp = first->next->data;
+					first->data = second->next->data;
+					second->data = tmp;
 				}
 			}
 		}
@@ -68,10 +68,10 @@ static struct List
 			p = p->next;
 		}
 
-		if (p != 0)//если k-й элемент существует
+		if (p != 0)
 		{
-			New->next = p->next;//связываем New и k-й элемент
-			p->next = New;//связываем (k-1)элемент и New
+			New->next = p->next;
+			p->next = New;
 		}
 		return beg;
 	}

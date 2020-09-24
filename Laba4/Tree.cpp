@@ -5,7 +5,7 @@ using namespace std;
 
 struct Node {
     int key;
-    Node* left, * right;
+    Node* left = nullptr, * right = nullptr;
 
     /* utility that allocates a new Node with the given key  */
     Node* newNode(int key)
