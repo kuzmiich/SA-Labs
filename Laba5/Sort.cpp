@@ -32,7 +32,7 @@ int main()
 	delete[] arr;
 	return 0;
 }
-
+// generate array
 void generate_arr(int* arr, int len)
 {
 	int lower = 100, upper = 1000, step = 100;
