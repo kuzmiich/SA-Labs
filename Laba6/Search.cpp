@@ -1,153 +1,129 @@
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <cmath>
+#include <ctime>
 
 using namespace std;
-enum { Enter = 1, Read, Sorting };
 
-const int n = 40;
-const int name_size = 20, number_size = 6, type_size = 5;
+int input_num();
 
-struct Aeroflot
-{
-    char name[name_size] = {};
-    char number[number_size] = {};
-    char type[type_size] = {};
+void generate_arr(int*, int);
 
-    static void fprint(Aeroflot* info, int i) {
-        cout << "Name place: " << info[i].name << endl;
-        cout << "Aircraft number: " << info[i].number << endl;
-        cout << "Aircraft time: " << info[i].type << endl;
-        cout << endl;
-    }
-};
+void buble_sort(int*, int);
 
-void menu();
+void max_abs_index_seqen(int*, int);
 
-void entry_obj(Aeroflot*);
-
-void sort_name(Aeroflot*, int);
-
-void search_identical(Aeroflot*, int);
-
-void enter_file_obj(Aeroflot*, int);
-
-void enter_file_sort_obj(Aeroflot* arr, int size);
+void max_abs_index_binary(int*, int);
 
 int main()
 {
-    int size = 2;
-    Aeroflot* air = {};
-    air = new Aeroflot[size];
+	srand(time(NULL));
+	cout << "Input size of array: ";
+	int len = input_num();
+	int* arr = new int[len];
 
-    for (int i = 0; i < size; i++)
-    {
-        entry_obj(&air[i]);
-    }
-    enter_file_obj(air, size);
+	generate_arr(arr, len);
 
-    sort_name(air, size);
+	buble_sort(arr, len);
 
-    search_identical(air, size);
+	max_abs_index_seqen(arr, len);
 
-    enter_file_sort_obj(air, size);
+	max_abs_index_binary(arr, len);
 
-    delete[] air;
-    return 0;
+	delete[] arr;
+	return 0;
+}
+//protection against incorrect input
+int input_num()
+{
+	char n[255];
+	cin.getline(n, 255);
+	return atoi(n);
+}
+// generate array
+void generate_arr(int* arr, int len)
+{
+	int lower = 100, upper = 1000, step = 100;
+	for (int i = 0; i < len; i++)
+	{
+		arr[i] = lower + rand() / (upper - lower);
+		cout << arr[i] << " ";
+	}
+	//--generate array
+	cout << "\n";
+}
+//bubble sorting
+void buble_sort(int* arr, int len)
+{
+	int count = 0;
+	for (int i = 0; i < len; i++)
+	{
+		for (int j = 0; j < len; j++)
+		{
+			if (arr[i] < arr[j])
+			{
+				swap(arr[i], arr[j]);
+				count++;
+			}
+		}
+	}
+	cout << "Buble sorting, count of operations: " << count << endl;
+	for (int i = 0; i < len; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << "\n\n";
 }
 
-void entry_obj(Aeroflot* air)
+//finding the maximum index in the module using a sequential search
+void max_abs_index_seqen(int* arr, int len)
 {
-    cout << "Enter the name of your flight destination:\n";
-    cin.getline(air->name, name_size, '\n');
-    cout << "Enter your flight number:\n";
-    cin.getline(air->number, number_size, '\n');
-    cout << "Enter aircraft type:\n";
-    cin.getline(air->type, type_size, '\n');
+	int max = abs(arr[0]);
+	int ind = 0, count = 0;
+	for (int i = 0; i < len; i++)
+	{
+		if (abs(arr[i]) > max)
+		{
+			max = arr[i];
+			ind = i;
+		}
+		count++;
+	}
+	cout << "Index element " << max << " in array equal = " << ind << endl;
+	cout << "Count of iterations: " << count << endl;
 }
 
-//selection sort
-void sort_name(Aeroflot* air, int size)
+//finding the maximum index in the module using a binary search
+void max_abs_index_binary(int* arr, int len)
 {
-    int change = 0, compare = 0;
-    for (int i = 0; i < size; i++)
-    {
-        int min_index = i;
-        for (int j = i + 1; j < size; j++)
-        {
-            if (strcmp(air[j].name, air[min_index].name) < 0)
-            {
-                min_index = j;
-                compare++;
-            }
-        }
-        swap(air[i], air[min_index]);
-        change++;
-    }
-    cout << "Count compares: " << compare << endl;
-    cout << "Count changes: " << change << endl;
-    cout << "Selection sorting completed successfully\n";
-}
-void enter_file_obj(Aeroflot* air, int size)
-{
-    fstream out("aeroflot.txt", ios_base::out | ios_base::trunc);
-    if (!out.is_open())
-    {
-        cout << "The file cannot be opened or created\n";
-        exit(1);
-    }
-    for (int i = 0; i < size; i++)
-    {
-        out << "Name of flight destionation:";
-        out.write((char*)&air[i].name, sizeof air[i].name);
-        out << "Flight number:";
-        out.write((char*)&air[i].number, sizeof air[i].number);
-        out << "Aircraft type:";
-        out.write((char*)&air[i].type, sizeof air[i].type);
-        out << '\n';
-    }
-    out.close();
-}
+	int max = abs(arr[0]);
+	int count = 0;
 
-void search_identical(Aeroflot* air, int size)
-{
-    char arr_new[n];
-    cout << "Input name place: ";
-    cin.getline(arr_new, n);
-    system("cls");
+	bool flag = false;
+	int l = 0;
+	int r = len;
+	int mid;
 
-    bool flag = true;
-    for (int i = 0; i < size; i++)
-    {
-        if (strcmp(arr_new, air[i].name) == 0)
-        {
-            cout << "Query: " << arr_new << "\n\nSearch result: \n";
-            air->fprint(air, i);
-            flag = false;
-        }
-    }
-    if (flag)
-    {
-        cout << "There are no such flights\n";
-    }
-}
+	while ((l <= r) && (flag != true)) {
+		mid = round((l + r) / 2);
 
-void enter_file_sort_obj(Aeroflot* air, int size)
-{
-    fstream fout("aeroflot1.txt", ios_base::out | ios_base::trunc);
-    if (!fout.is_open())
-    {
-        cout << "The file cannot be opened or created\n";
-        exit(1);
-    }
-    for (int i = 0; i < size; i++)
-    {
-        fout << "Name of flight destionation:";
-        fout.write((char*)&air[i].name, sizeof air[i].name);
-        fout << "Flight number:";
-        fout.write((char*)&air[i].number, sizeof air[i].number);
-        fout << "Aircraft type:";
-        fout.write((char*)&air[i].type, sizeof air[i].type);
-        fout << '\n';
-    }
-    fout.close();
+		if (abs(arr[mid]) == max)
+			flag = true;
+
+		count++;
+		if (abs(arr[mid]) < max)
+		{
+			r = mid - 1;
+		}
+		else
+		{
+			l = mid + 1;
+		}
+	}
+
+	if (flag)
+		cout << "Index element " << max << " in array equal = " << mid << endl;
+	else
+		cout << "Sorry, but there is no such element in the array\n";
+
+	cout << "Count of iterations: " << count << endl;
 }

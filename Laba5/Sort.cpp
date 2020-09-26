@@ -1,4 +1,3 @@
-//вариант 14
 #include <iostream>
 #include <cmath>
 #include <ctime>
@@ -7,15 +6,16 @@ using namespace std;
 
 void generate_arr(int*, int);
 
-void buble_sort(int*, int);
+void out_arr(int* arr, int len);
 
-void max_abs_index_seqen(int*, int);
+void insert_sort(int* arr, int len);
 
-void max_abs_index_binary(int*, int);
+void merge_sort(int* arr, int len);
 
+//sort insert and sort merge
 int main()
 {
-	srand(time(NULL));
+	srand(time_t(NULL));
 	int len;
 	cout << "Input size of array: ";
 	cin >> len;
@@ -23,11 +23,12 @@ int main()
 
 	generate_arr(arr, len);
 
-	buble_sort(arr, len);
+	insert_sort(arr, len);
 
-	max_abs_index_seqen(arr, len);
+	out_arr(arr, len);
+	cout << "\n\n";
 
-	max_abs_index_binary(arr, len);
+	//merge_sort(arr, len);
 
 	delete[] arr;
 	return 0;
@@ -44,20 +45,46 @@ void generate_arr(int* arr, int len)
 	//--generate array
 	cout << "\n";
 }
-//bubble sorting
-void buble_sort(int* arr, int len)
+//output array
+void out_arr(int* arr, int len)
 {
-	int count = 0;
 	for (int i = 0; i < len; i++)
 	{
-		for (int j = 0; j < len; j++)
+		cout << arr[i] << " ";
+	}
+}
+//bubble sorting
+void insert_sort(int* arr, int len)
+{
+	int count = 0, change = 0;
+
+	int temp, item;
+	for (int i = 1; i < len; i++)
+	{
+		temp = arr[i];
+		item = i - 1;
+		while (item >= 0 && arr[item] > temp)
 		{
-			if (arr[i] < arr[j])
-			{
-				swap(arr[i], arr[j]);
-				count++;
-			}
+			arr[item + 1] = arr[item];
+			arr[item] = temp;
+			item--;
+
+			count++;
 		}
+		change++;
+	}
+	cout << "Insert sorting:\n";
+	cout << "Count of operations: " << count << endl;
+	cout << "Count of change: " << change << endl;
+	
+}
+
+void merge_sort(int* arr, int len)
+{
+	int count = 0, change = 0;
+	for (int i = 0; i < len; i++)
+	{
+		
 	}
 	cout << "Buble sorting, count of operations: " << count << endl;
 	for (int i = 0; i < len; i++)
@@ -65,58 +92,4 @@ void buble_sort(int* arr, int len)
 		cout << arr[i] << " ";
 	}
 	cout << "\n\n";
-}
-
-//finding the maximum index in the module using a sequential search
-void max_abs_index_seqen(int* arr, int len)
-{
-	int max = abs(arr[0]);
-	int ind = 0, count = 0;
-	for (int i = 0; i < len; i++)
-	{
-		if (abs(arr[i]) > max)
-		{
-			max = arr[i];
-			ind = i;
-		}
-		count++;
-	}
-	cout << "Index element " << max << " in array equal = " << ind << endl;
-	cout << "Count of iterations: " << count << endl;
-}
-
-//finding the maximum index in the module using a binary search
-void max_abs_index_binary(int* arr, int len)
-{
-	int max = abs(arr[0]);
-	int count = 0;
-
-	bool flag = false;
-	int l = 0;
-	int r = len;
-	int mid;
-
-	while ((l <= r) && (flag != true)) {
-		mid = round((l + r) / 2);
-
-		if (abs(arr[mid]) == max)
-			flag = true;
-
-		count++;
-		if (abs(arr[mid]) < max)
-		{
-			r = mid - 1;
-		}
-		else
-		{
-			l = mid + 1;
-		}
-	}
-
-	if (flag)
-		cout << "Index element " << max << " in array equal = " << mid << endl;
-	else
-		cout << "Sorry, but there is no such element in the array\n";
-
-	cout << "Count of iterations: " << count << endl;
 }
