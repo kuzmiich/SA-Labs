@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    srand(time_t(NULL));
+    srand(time(NULL));
     Node* logic = new Node;
 
     Node* root = logic->init();

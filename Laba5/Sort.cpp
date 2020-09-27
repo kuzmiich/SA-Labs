@@ -1,9 +1,14 @@
 #include <iostream>
 #include <cmath>
 #include <ctime>
-#include <vector>
 using namespace std;
 
+int input_num()
+{
+	char n[255];
+	cin.getline(n, 255);
+	return atoi(n);
+}
 // generate array
 template<typename T>
 void generate_arr(T* arr, int len)
@@ -11,7 +16,7 @@ void generate_arr(T* arr, int len)
 	int lower = 100, upper = 1000, step = 100;
 	for (int i = 0; i < len; i++)
 	{
-		arr[i] = lower + rand() / (upper - lower);
+		arr[i] = round((lower + rand() % (upper - lower)) / step) * step;
 		cout << arr[i] << " ";
 	}
 	//--generate array
@@ -19,7 +24,7 @@ void generate_arr(T* arr, int len)
 }
 //output array
 template<typename T>
-void out_arr(T* arr, int len)
+void output_arr(T* arr, int len)
 {
 	for (int i = 0; i < len; i++)
 	{
@@ -32,16 +37,16 @@ void insert_sort(T* arr, int len)
 {
 	int count = 0, change = 0;
 
-	int temp, item;
+	int temp, j;
 	for (int i = 1; i < len; i++)
 	{
 		temp = arr[i];
-		item = i - 1;
-		while (item >= 0 && arr[item] > temp)
+		j = i - 1;
+		while (j >= 0 && arr[j] > temp)
 		{
-			arr[item + 1] = arr[item];
-			arr[item] = temp;
-			item--;
+			arr[j + 1] = arr[j];
+			arr[j] = temp;
+			j--;
 
 			count++;
 		}
@@ -90,33 +95,40 @@ void merge(T* arr, int left, int right, int mid)
 template <typename T>
 void merge_sort(T* arr, int l, int r)
 {
-	if (l < r) {
+	int count = 0, change = 0;
+	while (l < r) {
 		int m = l + (r - l) / 2;
+		while ()
+		{
+			l = m;
+			l = m + 1;
 
-		merge_sort(arr, l, m);
-		merge_sort(arr, m + 1, r);
+			merge(arr, l, m, r);
 
-		merge(arr, l, m, r);
+		}
 	}
+	/*cout << "Merge sorting:\n";
+	cout << "Count of operations: " << count << endl;
+	cout << "Count of change: " << change << endl;*/
 }
 //sort insert and sort merge
 int main()
 {
-	srand(time_t(NULL));
+	srand(time(NULL));
 	int len;
 	cout << "Input size of array: ";
-	cin >> len;
+	len = input_num();
 	int* arr = new int[len];
 
 	generate_arr(arr, len);
 
 	insert_sort(arr, len);
 
-	out_arr(arr, len);
+	output_arr(arr, len);
 	cout << "\n\n";
 	merge_sort(arr, 1, len+1);
 
-	out_arr(arr, len);
+	output_arr(arr, len);
 	cout << "\n";
 	delete[] arr;
 	return 0;

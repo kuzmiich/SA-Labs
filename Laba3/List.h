@@ -6,8 +6,6 @@ using namespace std;
 
 static struct List
 {
-	private:
-		//List* tmp = nullptr;
 	public:
 		string data; // information field
 		List* next = nullptr; // address field

@@ -33,7 +33,7 @@ void gen_arr(int* arr, int len)
 	int lower = -100, upper = 100;
 	for (int i = 0; i < len; i++)
 	{
-		arr[i] = lower + rand() / (upper - lower);
+		arr[i] = lower + rand() % (upper - lower);
 		cout << arr[i] << " ";
 	}
 	cout << "\n";
