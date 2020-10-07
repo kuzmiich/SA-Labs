@@ -27,22 +27,24 @@ int main()
 			beg = listMethods->make_list(k);
 			break;
 		case 2:
-			cout << "Enter the number of the list you want to add:\n";
+			cout << "Enter the number of the list you want to add:\nCount: ";
 			k = abs(input_num());
 			listMethods->add_point(beg, k);
 			break;
 		case 3:
 			cout << "Enter the number of the list you want to delete:\n";
-			k = abs(input_num());
+			k = abs(input_num()) - 1;
 			listMethods->del_point(beg, k);
 			break;
 		case 4:
 			cout << "Output elements of the list:\n";
 			listMethods->print(beg);
+			system("pause");
 			break;
 		case 5:
 			cout << "Sort elements:\n";
-			listMethods->buble_sort(beg, len);
+			listMethods->print_adr_infoPart_adrPart(beg);
+			system("pause");
 			break;
 		case 6:
 			flag = false;

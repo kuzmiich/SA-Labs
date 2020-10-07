@@ -2,12 +2,70 @@
 #define MyList
 
 #include <string>
+#include <vector>
 using namespace std;
+
+static struct NewList
+{
+	string surname; // information field
+	string name;
+	string secondName;
+
+	NewList* next = nullptr; // address field
+
+	inline bool space(char c) {
+		return isspace(c);
+	}
+
+	inline bool notspace(char c) {
+		return !isspace(c);
+	}
+	//break a sentence into words
+	vector<string> split(string s) {
+		typedef string::const_iterator iter;
+		vector<string> res;
+		iter i = s.begin();
+		while (i != s.end()) {
+			i = find_if(i, s.end(), notspace); // find the beginning of a word
+			iter j = find_if(i, s.end(), space); // find the end of the same word
+			if (i != s.end()) {
+				res.push_back(string(i, j)); //insert the word into vector
+				i = j; // repeat 1,2,3 on the rest of the line.
+			}
+		}
+		return res;
+	}
+	//ConvertToNewList
+	static NewList ConvertToNewList(List* root, int len)
+	{
+		string FIO = split(root->FIO);
+		NewList edit_root = NewList();
+
+		return edit_root;
+	}
+
+	//print list
+	static void print(NewList* beg)
+	{
+		NewList* p = beg;
+		p = p->next;
+		while (p != 0)
+		{
+			cout << p->surname << " "
+				<< p->name << " "
+				<< p->secondName << "\n";
+
+			p = p->next;
+		}
+		cout << "\n";
+	}
+};
 
 static struct List
 {
 	public:
-		string data; // information field
+		string FIO;
+
 		List* next = nullptr; // address field
 	
 	// create start list
@@ -21,8 +79,10 @@ static struct List
 		for (int i = 0; i < n; i++)
 		{
 			r = new(List);
-			cout << "Input " << i + 1 << " string:";
-			cin >> r->data;
+			cout << "Input " << i + 1 << " FIO:\n";
+
+			cin >> r->FIO;
+
 			r->next = 0;
 			p->next = r;
 			// put the pointer p(the last element) on r
@@ -30,35 +90,32 @@ static struct List
 		}
 		return beg;
 	}
-	//buble sort
-	static void buble_sort(List* beg, int len)
+	static void print_adr_infoPart_adrPart(List* root)
 	{
-		List* first = beg, * second = beg;
-		while(first)
+		root = root->next;
+		while(root)
 		{
-			while(second)
-			{
-				if (beg->data < beg->next->data)
-				{
-					string tmp = first->next->data;
-					first->data = second->next->data;
-					second->data = tmp;
-				}
-			}
+			cout << root << endl;
+			cout << root->FIO << endl;
+			cout << root->next << endl;
+			root = root->next;
 		}
+
 	}
+	
 	//Add element to list
-	static List* add_point(List* beg, int k)
+	static List* add_point(List* root, int k)
 	{
-		List* p = beg;
+		List* p = root;
 		List* New = new(List);
-		cin >> New->data;
+		cout << "FIO:\n";
+		cin >> New->FIO;
 
 		if (k == 0)
 		{
-			New->next = beg;
-			beg = New;
-			return beg;
+			New->next = root;
+			root = New;
+			return root;
 		}
 
 		for (int i = 0; i < k - 1 && p != 0; i++)
@@ -71,17 +128,17 @@ static struct List
 			New->next = p->next;
 			p->next = New;
 		}
-		return beg;
+		return root;
 	}
 	//delete element with number (k)
-	static List* del_point(List* beg, int k)
+	static List* del_point(List* root, int k)
 	{
-		List* p = beg;
+		List* p = root;
 		if (k == 0)
 		{
-			beg = beg->next;
+			root = root->next;
 			delete p;
-			return beg;
+			return root;
 		}
 
 		for (int i = 1; i < k && p->next; i++)
@@ -90,23 +147,24 @@ static struct List
 		}
 
 		if (p->next == 0) 
-			return beg;
+			return root;
 		List* r = p->next;
 		p->next = r->next;
 		delete r;
-		return beg;
+		return root;
 	}
 	//print list
-	static void print(List* beg)
+	static void print(List* root)
 	{
-		List* p = beg;
+		List* p = root;
+		p = p->next;
 		while (p != 0)
 		{
-			cout << p->data << "\t";
+			cout << p->FIO << "\n";
+
 			p = p->next;
 		}
 		cout << "\n";
-		system("pause");
 	}
 };
 #endif
