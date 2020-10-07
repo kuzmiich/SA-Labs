@@ -13,11 +13,12 @@ int input_num()
 template<typename T>
 void generate_arr(T* arr, int len)
 {
-	int lower = 100, upper = 1000, step = 100;
+	int lower = 100, 
+		upper = 1000, 
+		step = 100;
 	for (int i = 0; i < len; i++)
 	{
 		arr[i] = round((lower + rand() % (upper - lower)) / step) * step;
-		cout << arr[i] << " ";
 	}
 	//--generate array
 	cout << "\n";
@@ -98,7 +99,7 @@ void merge_sort(T* arr, int l, int r)
 	int count = 0, change = 0;
 	while (l < r) {
 		int m = l + (r - l) / 2;
-		while ()
+		while (1)
 		{
 			l = m;
 			l = m + 1;
@@ -121,6 +122,8 @@ int main()
 	int* arr = new int[len];
 
 	generate_arr(arr, len);
+
+	output_arr(arr, len);
 
 	insert_sort(arr, len);
 
