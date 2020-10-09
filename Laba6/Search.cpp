@@ -24,10 +24,10 @@ void output_arr(T* arr, int len)
 template<typename T>
 void generate_arr(T* arr, int len)
 {
-	int lower = -100, upper = 1000;
+	int lower = -100, upper = 100;
 	for (int i = 0; i < len; i++)
 	{
-		arr[i] = lower + rand() / (upper - lower);
+		arr[i] = lower + rand() % (upper - lower);
 	}
 }
 //bubble sorting
@@ -51,7 +51,7 @@ void buble_sort(T* arr, int len)
 
 //finding the maximum index in the module using a sequential search
 template<typename T>
-void max_abs_index_seqen(T* arr, int len)
+int max_of_seqen(T* arr, int len)
 {
 	int max = abs(arr[0]);
 	int ind = 0, count = 0;
@@ -64,13 +64,14 @@ void max_abs_index_seqen(T* arr, int len)
 		}
 		count++;
 	}
-	cout << "Index element " << max << " in array = " << ind << endl;
+	cout << "Index element in absolute value " << max << " in array = " << ind << endl;
 	cout << "Count of iterations: " << count << endl;
+	return ind;
 }
 
 //finding the maximum index in the module using a binary search
 template<typename T>
-void max_abs_index_binary(T* arr, int len)
+int max_of_binary(T* arr, int len)
 {
 	int max = abs(arr[0]);
 	int count = 0;
@@ -78,7 +79,7 @@ void max_abs_index_binary(T* arr, int len)
 	bool flag = false;
 	int l = 0;
 	int r = len;
-	int mid;
+	int mid = len/2;
 
 	while ((l <= r) && (flag != true)) {
 		mid = round((l + r) / 2);
@@ -98,12 +99,14 @@ void max_abs_index_binary(T* arr, int len)
 	}
 
 	if (flag)
-		cout << "Index element " << max << " in array = " << mid << endl;
+		cout << "Index element in absolute value " << max << " in array = " << mid << endl;
 	else
 		cout << "Sorry, but there is no such element in the array\n";
 
 	cout << "Count of iterations: " << count << endl;
+	return mid;
 }
+
 int main()
 {
 	srand(time(NULL));
@@ -121,12 +124,16 @@ int main()
 
 	cout << "\n\n";
 
-	max_abs_index_seqen(arr, len);
+	int sequen = max_of_seqen(arr, len);
 
-	cout << "\n";
+	cout << "\n\n";
 
-	max_abs_index_binary(arr, len);
+	int binary = max_of_binary(arr, len);
 
+	if (binary != sequen)
+	{
+		cout << "Binary search work false";
+	}
 	delete[] arr;
 	return 0;
 }

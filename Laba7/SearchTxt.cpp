@@ -1,18 +1,6 @@
 #include <iostream>
 using namespace std;
 
-int HorspoolMatch(string T, string P)
-{
-    int n = T.length();// длина строки
-
-    int m = P.length();// длина шаблона 
-
-    // если программа вывалилась из внешнего цикла то усЄ - 
-      //ничего она не нашла и дошла до конца текста
-
-
-    return -1;// пул€ем сообщение о неудаче
-}
 int intDirectSearch(char* str, char* substring) {
     int n, m;
     int res = -1;
