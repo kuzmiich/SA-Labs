@@ -13,15 +13,11 @@ int input_num()
 template<typename T>
 void generate_arr(T* arr, int len)
 {
-	int lower = 100, 
-		upper = 1000, 
-		step = 100;
+	int lower = 100, upper = 1000, step = 100;
 	for (int i = 0; i < len; i++)
 	{
 		arr[i] = round((lower + rand() % (upper - lower)) / step) * step;
 	}
-	//--generate array
-	cout << "\n";
 }
 //output array
 template<typename T>

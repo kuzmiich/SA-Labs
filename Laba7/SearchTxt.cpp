@@ -1,33 +1,58 @@
 #include <iostream>
 using namespace std;
 
+int HorspoolMatch(string T, string P)
+{
+    int n = T.length();// длина строки
+
+    int m = P.length();// длина шаблона 
+
+    // если программа вывалилась из внешнего цикла то усё - 
+      //ничего она не нашла и дошла до конца текста
+
+
+    return -1;// пуляем сообщение о неудаче
+}
 int intDirectSearch(char* str, char* substring) {
-    int sl, ssl;
+    int n, m;
     int res = -1;
-    sl = strlen(str);
-    ssl = strlen(substring);
-    if (sl == 0)
+    n = strlen(str);
+    m = strlen(substring);
+    if (n == 0)
     {
         cout << "The string set incorrectly\n";
     }
-    else if (ssl == 0)
+    else if (m == 0)
     {
         cout << "The substring set incorrectly\n";
     }
     else
     {
-        for (int i = 0; i < sl - ssl + 1; i++)
+        const int N = 255;
+        int Slide[N];
+        for (int i = 0; i < N; i++)
+            Slide[i] = m;// таблица сдвигов заполняется длинной образца
+        for (int l = 0; l < m - 1; l++)// в ТС 
         {
-            for (int j = 0; j < ssl; j++)
+            Slide[str[l]] = m - 1 - l;
+        }
+        int i = m - 1;//позиция правого конца образца
+
+        while (i <= (n - 1))// пока првый конец не достигнет правого конца строки
+        {
+            int k = 0;// количество совпавших символов
+            while (k <= m - 1 && str[m - 1 - k] == substring[i - k])// пока количество совпадений меньше образца и           
             {
-                if (substring[j] != str[i + j])
-                {
-                    break;
-                }
-                else if (j == ssl - 1) {
-                    res = i;
-                    break;
-                }
+                k++;
+            }
+
+            if (k == m)                  // проверяем чего это из предыдущего цикла вывалилась программа- на совпадение 
+                return i - m + 1;          // если совпадение полное то  возвращаем  позицию первого совпавшего симовола в строке 
+
+            else                       // если не все совпали 
+            {
+                res = Slide[str[i]] - 1;
+                i = i + Slide[str[i]];    //  сдвигаем i(позиция правого конца шаблона) по таблице сдвигов
             }
         }
     }
@@ -37,7 +62,7 @@ int intDirectSearch(char* str, char* substring) {
 int main()
 {
     char str[] = "daaga";
-    char substr[] = "da";
+    char substr[] = "aga";
     cout << intDirectSearch(str, substr);
     return 0;
 }

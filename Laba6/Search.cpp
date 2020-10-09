@@ -4,34 +4,6 @@
 
 using namespace std;
 
-int input_num();
-
-void generate_arr(int*, int);
-
-void buble_sort(int*, int);
-
-void max_abs_index_seqen(int*, int);
-
-void max_abs_index_binary(int*, int);
-
-int main()
-{
-	srand(time(NULL));
-	cout << "Input size of array: ";
-	int len = input_num();
-	int* arr = new int[len];
-
-	generate_arr(arr, len);
-
-	buble_sort(arr, len);
-
-	max_abs_index_seqen(arr, len);
-
-	max_abs_index_binary(arr, len);
-
-	delete[] arr;
-	return 0;
-}
 //protection against incorrect input
 int input_num()
 {
@@ -39,20 +11,28 @@ int input_num()
 	cin.getline(n, 255);
 	return atoi(n);
 }
-// generate array
-void generate_arr(int* arr, int len)
+//output array
+template<typename T>
+void output_arr(T* arr, int len)
 {
-	int lower = 100, upper = 1000, step = 100;
+	for (int i = 0; i < len; i++)
+	{
+		cout << arr[i] << " ";
+	}
+}
+// generate array
+template<typename T>
+void generate_arr(T* arr, int len)
+{
+	int lower = -100, upper = 1000;
 	for (int i = 0; i < len; i++)
 	{
 		arr[i] = lower + rand() / (upper - lower);
-		cout << arr[i] << " ";
 	}
-	//--generate array
-	cout << "\n";
 }
 //bubble sorting
-void buble_sort(int* arr, int len)
+template<typename T>
+void buble_sort(T* arr, int len)
 {
 	int count = 0;
 	for (int i = 0; i < len; i++)
@@ -67,15 +47,11 @@ void buble_sort(int* arr, int len)
 		}
 	}
 	cout << "Buble sorting, count of operations: " << count << endl;
-	for (int i = 0; i < len; i++)
-	{
-		cout << arr[i] << " ";
-	}
-	cout << "\n\n";
 }
 
 //finding the maximum index in the module using a sequential search
-void max_abs_index_seqen(int* arr, int len)
+template<typename T>
+void max_abs_index_seqen(T* arr, int len)
 {
 	int max = abs(arr[0]);
 	int ind = 0, count = 0;
@@ -88,12 +64,13 @@ void max_abs_index_seqen(int* arr, int len)
 		}
 		count++;
 	}
-	cout << "Index element " << max << " in array equal = " << ind << endl;
+	cout << "Index element " << max << " in array = " << ind << endl;
 	cout << "Count of iterations: " << count << endl;
 }
 
 //finding the maximum index in the module using a binary search
-void max_abs_index_binary(int* arr, int len)
+template<typename T>
+void max_abs_index_binary(T* arr, int len)
 {
 	int max = abs(arr[0]);
 	int count = 0;
@@ -121,9 +98,35 @@ void max_abs_index_binary(int* arr, int len)
 	}
 
 	if (flag)
-		cout << "Index element " << max << " in array equal = " << mid << endl;
+		cout << "Index element " << max << " in array = " << mid << endl;
 	else
 		cout << "Sorry, but there is no such element in the array\n";
 
 	cout << "Count of iterations: " << count << endl;
+}
+int main()
+{
+	srand(time(NULL));
+	cout << "Input size of array: ";
+	int len = input_num();
+	int* arr = new int[len];
+
+	generate_arr(arr, len);
+	output_arr(arr, len);
+
+	cout << "\n\n";
+
+	buble_sort(arr, len);
+	output_arr(arr, len);
+
+	cout << "\n\n";
+
+	max_abs_index_seqen(arr, len);
+
+	cout << "\n";
+
+	max_abs_index_binary(arr, len);
+
+	delete[] arr;
+	return 0;
 }
