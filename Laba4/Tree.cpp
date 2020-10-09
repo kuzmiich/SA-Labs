@@ -13,7 +13,7 @@ int main()
 
     int sum = logic->sum_node(root);
 
-    logic->print_adr_infoPart_adrPart(root);
+    logic->print_info(root);
 
     cout << "Sum of all the elements is: " << sum << endl;
 

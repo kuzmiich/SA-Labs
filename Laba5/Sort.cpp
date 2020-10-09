@@ -53,65 +53,70 @@ void insert_sort(T* arr, int len)
 		}
 		change++;
 	}
-	cout << "Insert sorting:\n";
+	cout << "\nInsert sorting:\n";
 	cout << "Count of operations: " << count << endl;
 	cout << "Count of change: " << change << endl;
 
 }
-
-template <typename T>
-void merge(T* arr, int left, int right, int mid)
+template<typename T>
+void merge_sort(T* arr, int len)
 {
-	int j = left;
-	int k = mid + 1;
-	int len = right - left + 1;
-
-	if (len <= 1) return;
-
-	T* tmp = new T[len];
-
-	for (int i = 0; i < len; ++i) {
-		if (j <= mid && k <= right) {
-			if (arr[j] < arr[k])
-				tmp[i] = arr[j++];
-			else
-				tmp[i] = arr[k++];
-		}
-		else {
-			if (j <= mid)
-				tmp[i] = arr[j++];
-			else
-				tmp[i] = arr[k++];
-		}
-	}
-
-	j = 0;
-	for (int i = left; i <= right; ++i) {
-		arr[i] = tmp[j++];
-	}
-	delete[] tmp;
-}
-
-// A function of the rising of the merger
-template <typename T>
-void merge_sort(T* arr, int l, int r)
-{
-	int count = 0, change = 0;
-	while (l < r) {
-		int m = l + (r - l) / 2;
-		while (1)
+	int count = 0, changes = 0;
+	int mid = len / 2;
+	if (len % 2 == 1)
+		mid++;
+	int h = 1; // step
+	int* sequence = new int[len];
+	int step;
+	while (h < len)
+	{
+		step = h;
+		int i = 0;   // индекс первого пути
+		int j = mid; // индекс второго пути
+		int k = 0;   // индекс элемента в результирующей последовательности
+		while (step <= mid)
 		{
-			l = m;
-			l = m + 1;
-
-			merge(arr, l, m, r);
-
+			while ((i < step) && (j < len) && (j < (mid + step)))
+			{ // пока не дошли до конца пути
+			  // заполняем следующий элемент формируемой последовательности
+			  // меньшим из двух просматриваемых
+				if (arr[i] < arr[j])
+				{
+					sequence[k] = arr[i];
+					i++; k++;
+				}
+				else {
+					sequence[k] = arr[j];
+					j++; k++;
+				}
+				count++;
+			}
+			while (i < step)
+			{ // переписываем оставшиеся элементы первого пути (если второй кончился раньше)
+				sequence[k] = arr[i];
+				i++; k++;
+				count++;
+			}
+			while ((j < (mid + step)) && (j < len))
+			{  // переписываем оставшиеся элементы второго пути (если первый кончился раньше)
+				sequence[k] = arr[j];
+				j++; k++;
+				count++;
+			}
+			step = step + h; // переходим к следующему этапу
+			
 		}
+		h = h * 2;
+		// Переносим упорядоченную последовательность (промежуточный вариант) в исходный массив
+		for (i = 0; i < len; i++)
+			arr[i] = sequence[i];
+		changes++;
 	}
-	/*cout << "Merge sorting:\n";
+	cout << "Merge sorting:\n";
 	cout << "Count of operations: " << count << endl;
-	cout << "Count of change: " << change << endl;*/
+	cout << "Count of change: " << changes << endl;
 }
+
 //sort insert and sort merge
 int main()
 {
@@ -129,7 +134,7 @@ int main()
 
 	output_arr(arr, len);
 	cout << "\n\n";
-	merge_sort(arr, 1, len+1);
+	merge_sort(arr, len);
 
 	output_arr(arr, len);
 	cout << "\n";

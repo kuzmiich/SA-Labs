@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-int intDirectSearch(char* string, char* substring) {
+int intDirectSearch(char* str, char* substring) {
     int sl, ssl;
     int res = -1;
-    sl = strlen(string);
+    sl = strlen(str);
     ssl = strlen(substring);
     if (sl == 0)
     {
@@ -20,7 +20,7 @@ int intDirectSearch(char* string, char* substring) {
         {
             for (int j = 0; j < ssl; j++)
             {
-                if (substring[j] != string[i + j])
+                if (substring[j] != str[i + j])
                 {
                     break;
                 }
@@ -36,9 +36,8 @@ int intDirectSearch(char* string, char* substring) {
 
 int main()
 {
-    char* str = new char[];
-    char* substr = new char[];
-
-    delete[] str, substr;
+    char str[] = "daaga";
+    char substr[] = "da";
+    cout << intDirectSearch(str, substr);
     return 0;
 }

@@ -1,57 +1,86 @@
 #include <iostream>
-#include <cmath>
 #include <string>
-#include "List.h"
-#include "MenuMethods.h"
 
 using namespace std;
 
+struct List
+{
+	char letter;// Inforamation field
+
+	List* next = nullptr; // Address field
+
+	static void add_element(List* lst_letter, char c)
+	{
+        List* buf = new List;
+        buf->next = NULL;
+        buf->letter = c;
+        if (lst_letter == NULL)
+        {
+            lst_letter = buf;
+        }
+        else
+        {
+            List* pList = lst_letter;
+            while (pList->next != NULL) pList = pList->next;
+            pList->next = buf;
+        }
+	}
+    static void ParseFio(List* root)
+    {
+        List* surname = new List;
+        List* name = new List;
+        List* secondName = new List;
+        while (root->letter != ' ')
+        {
+            surname->add_element(surname, root->letter);
+            root = root->next;
+        }
+        root = root->next;
+        while (root->letter != ' ')
+        {
+            name->add_element(name, root->letter);
+            root = root->next;
+        }
+        root = root->next;
+        while (root)
+        {
+            secondName->add_element(secondName, root->letter);
+            root = root->next;
+        }
+        cout << "Name:\n";
+        print(name);
+        cout << "Second name:\n";
+        print(secondName);
+        cout << "Surname\n";
+        print(surname);
+
+        delete name, secondName, surname;
+    }
+	static void print(List* root)
+	{
+        root = root->next;
+        while (root)
+        {
+            cout << "Adress: " << root << "  Information part: " << root->letter << "  Adress part: " << root->next << endl;
+            root = root->next;
+        }
+        cout << endl;
+	}
+};
+
 int main()
 {
-	List* listMethods = new List;
-	List* beg = nullptr;
-	int k, len;
-	bool flag = true;
-	while (flag)
-	{
-		menu();
-		int key = input();
-		system("cls");
+	List* list_letter = new List();
+    const int size = 255;
+    char str[] = "Kuzmich Ivan Vitalievich";
 
-		switch (key)
-		{
-		case 1:
-			cout << "Create a list.Enter the number of items in the list:\n";
-			k = abs(input_num());
-			len = k;
-			beg = listMethods->make_list(k);
-			break;
-		case 2:
-			cout << "Enter the number of the list you want to add:\nCount: ";
-			k = abs(input_num());
-			listMethods->add_point(beg, k);
-			break;
-		case 3:
-			cout << "Enter the number of the list you want to delete:\n";
-			k = abs(input_num()) - 1;
-			listMethods->del_point(beg, k);
-			break;
-		case 4:
-			cout << "Output elements of the list:\n";
-			listMethods->print(beg);
-			system("pause");
-			break;
-		case 5:
-			cout << "Sort elements:\n";
-			listMethods->print_adr_infoPart_adrPart(beg);
-			system("pause");
-			break;
-		case 6:
-			flag = false;
-			break;
-		default:
-			break;
-		}
-		system("cls");
-	}
+    for (int i = 0; i < strlen(str); i++)
+    {
+        list_letter->add_element(list_letter, str[i]);
+    }
+    list_letter->print(list_letter);
+    list_letter->ParseFio(list_letter);
+
+	delete list_letter;
+	return 0;
 }

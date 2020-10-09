@@ -54,18 +54,18 @@ struct Node {
         return (root->key + sum_node(root->left) + sum_node(root->right));
     }
     /* Displaying the address, information part, and address part of each element */
-    static void print_adr_infoPart_adrPart(Node* root)
+    static void print_info(Node* root)
     {
         if (root)
         {
             Node* p = root->left;
-            Node* b = root->right;
-            print_adr_infoPart_adrPart(root->left);
+            Node* r = root->right;
+            print_info(root->left);
             cout << root->key << endl;
             cout << &(root->key) << endl;
             cout << p << endl;
-            cout << b << endl;
-            print_adr_infoPart_adrPart(root->right);
+            cout << r << endl;
+            print_info(root->right);
         }
 
     }
