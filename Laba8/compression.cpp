@@ -1,16 +1,93 @@
 #include <iostream>
-
+#include <string>
+#include <fstream>
+#include <vector>
+#include <unordered_map>
+#include <map>
+#include "huffman.h"
+#include "lzw.h"
 using namespace std;
 
-void compression()
-{
-
-}
 
 int main()
 {
-    string str;
+	string path_src = "source.txt";
 
-    compression();
+	string raw = readFile(path_src);
+	cout << raw << endl;
+	map<char, int> symbols;
+
+	//init
+	for (int i = 0; i < raw.length(); i++)
+		symbols[raw[i]]++;
+	//!init
+
+	list<Huf*> trees;
+	map<char, int>::iterator itr;
+	for (itr = symbols.begin(); itr != symbols.end(); itr++)
+	{
+		Huf* p = new Huf(itr->first, itr->second); // key = symbol;  value = count
+		trees.push_back(p);
+	}
+
+	while (trees.size() != 1)
+	{
+		trees.sort(SortHuf);
+
+		Huf* l = trees.front();
+		trees.pop_front();
+		Huf* r = trees.front();
+		trees.pop_front();
+
+		Huf* parent = new Huf(l, r);
+		trees.push_back(parent);
+	}
+
+	Huf* root = trees.front();
+	Print(root);
+
+	vector<bool> code; // buffer
+	map<char, vector<bool>> table;
+	BuildTable(root, code, table); // generate symbol-code key-value pair
+
+	for (itr = symbols.begin(); itr != symbols.end(); itr++)
+	{
+		cout << itr->first << " - ";
+		for (int j = 0; j < table[itr->first].size(); j++)
+			cout << table[itr->first][j];
+		cout << endl;
+	}
+
+	// print coded string
+	string out = "";
+	for (int i = 0; i < raw.length(); i++)
+		for (int j = 0; j < table[raw[i]].size(); j++)
+		{
+			out += table[raw[i]][j] + '0';
+		}
+	string path_res = "res.txt";
+
+
+	// decode
+	map<vector<bool>, char> ftable;
+	for (auto i = table.begin(); i != table.end(); i++)
+		ftable[i->second] = i->first;
+
+	enterFile(path_res, out + "\n" + Decode(out, ftable));
+
+    //------------------------~ LWZ ~------------------------------
+	string path2 = "res2.txt";
+	string str = readFile(path_src);
+
+	cout << str << endl;
+
+    vector<int> output_code = encoding(str);
+    
+	output_vector(output_code);
+
+    cout << endl;
+
+    decoding(output_code);
+	//enterFile();
     return 0;
 }

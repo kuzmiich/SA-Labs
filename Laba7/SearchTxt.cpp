@@ -51,6 +51,6 @@ int main()
 {
     char str[] = "daaga";
     char substr[] = "aga";
-    cout << intDirectSearch(str, substr);
+    cout << "Index of the first occurrence." << intDirectSearch(str, substr) << substr;
     return 0;
 }
