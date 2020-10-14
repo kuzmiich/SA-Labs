@@ -7,7 +7,59 @@
 #include "huffman.h"
 #include "lzw.h"
 using namespace std;
+string getString(vector<int> vect)
+{
+	string str = "";
+	for (int i = 0; i < vect.size(); i++)
+	{
+		str += vect[i];
+	}
+	return str;
+}
 
+void enterFile(string path, string str)
+{
+	fstream fout(path, ios::out | ios::trunc);
+	if (!fout.is_open())
+	{
+		cout << "Error, file not open.";
+		exit(1);
+	}
+	fout << str;
+	fout.close();
+}
+
+string readFile(string path)
+{
+	string value;
+	fstream fout(path, ios::in);
+	if (!fout.is_open())
+	{
+		cout << "Error, file not open.\n";
+		return "";
+	}
+	getline(fout, value);
+	fout.close();
+
+	return value;
+}
+
+int filesize(string path) {
+	fstream fin(path, ios::in);
+	if (!fin)
+	{
+		cout << "Error, file not found.\n";
+		exit(1);
+	}
+	fin.seekg(0, ios::end);
+	int size = fin.tellg();
+	fin.close();
+	return size;
+}
+
+double compressionRate(string path1, string path2) {
+	return (double)filesize(path2) / filesize(path1);
+}
 
 int main()
 {
@@ -65,29 +117,34 @@ int main()
 		{
 			out += table[raw[i]][j] + '0';
 		}
-	string path_res = "res.txt";
-
+	string path1 = "out1.txt";
 
 	// decode
 	map<vector<bool>, char> ftable;
 	for (auto i = table.begin(); i != table.end(); i++)
 		ftable[i->second] = i->first;
 
-	enterFile(path_res, out + "\n" + Decode(out, ftable));
+	enterFile(path1, out);
+
+	cout << "Compression rate: " << compressionRate(path_src, path1) << endl;
+
+	enterFile(path1, out + "\n" + Decode(out, ftable));
 
     //------------------------~ LWZ ~------------------------------
-	string path2 = "res2.txt";
+	string path2 = "out2.txt";
 	string str = readFile(path_src);
 
 	cout << str << endl;
 
     vector<int> output_code = encoding(str);
-    
-	output_vector(output_code);
 
-    cout << endl;
+	enterFile(path2, getString(output_code));
+
+	cout << "Compression rate: " << compressionRate(path_src, path2) << endl;
 
     decoding(output_code);
-	//enterFile();
+
+	enterFile(path2, "Coded: " + getString(output_code));
+	enterFile(path2, "\nDecoded:" + decoding(output_code));
     return 0;
 }

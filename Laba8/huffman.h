@@ -85,30 +85,4 @@ string Decode(string& str, map<vector<bool>, char>& table) // flipped table: cod
 	}
 	return out;
 }
-
-void enterFile(string path, string str)
-{
-    fstream fout(path, ios::out | ios::trunc);
-    if (!fout.is_open())
-    {
-        cout << "Error, file not open.";
-        exit(1);
-    }
-    fout << str;
-    fout.close();
-}
-string readFile(string path)
-{
-    string value;
-    fstream fout(path, ios::in);
-    if (!fout.is_open())
-    {
-        cout << "Error, file not open.\n";
-        return "";
-    }
-    getline(fout, value);
-    fout.close();
-
-    return value;
-}
 #endif

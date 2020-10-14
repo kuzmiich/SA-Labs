@@ -15,7 +15,6 @@ vector<int> encoding(string s1)
     p += s1[0];
     int code = 256;
     vector<int> output_code;
-    cout << "String\tOutput_Code\n";
 
     for (int i = 0; i < s1.length(); i++) {
 
@@ -37,12 +36,9 @@ vector<int> encoding(string s1)
         c = "";
     }
 
-    cout << p << "\t" << table[p] << endl;
-
     output_code.push_back(table[p]);
 
     return output_code;
-
 }
 void output_vector(vector<int> code)
 {
@@ -52,9 +48,8 @@ void output_vector(vector<int> code)
     }
 }
 
-void decoding(vector<int> op)
+string decoding(vector<int> op)
 {
-    cout << "\nDecoding\n";
     unordered_map<int, string> table;
 
     for (int i = 0; i <= 255; i++) {
@@ -68,7 +63,7 @@ void decoding(vector<int> op)
     string c = "";
     c += s[0];
 
-    cout << s;
+    // cout << s;
 
     int count = 256;
     for (int i = 0; i < op.size() - 1; i++)
@@ -81,7 +76,6 @@ void decoding(vector<int> op)
         else {
             s = table[n];
         }
-        cout << s;
 
         c = "";
         c += s[0];
@@ -91,7 +85,7 @@ void decoding(vector<int> op)
         old = n;
 
     }
-
+    return s;
 }
 #endif // !lzw
 

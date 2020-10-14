@@ -146,7 +146,8 @@
     <ClInclude Include="lzw.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="res.txt" />
+    <Text Include="out1.txt" />
+    <Text Include="out2.txt" />
     <Text Include="source.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="compression.cpp">
-      <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="lzw.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -29,10 +24,18 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="source.txt">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Файлы ресурсов</Filter>
     </Text>
-    <Text Include="res.txt">
-      <Filter>Исходные файлы</Filter>
+    <Text Include="out1.txt">
+      <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="out2.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="compression.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
