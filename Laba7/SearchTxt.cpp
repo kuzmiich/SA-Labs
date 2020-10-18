@@ -1,11 +1,44 @@
 #include <iostream>
 using namespace std;
 
-int intDirectSearch(char* str, char* substring) {
-    int n, m;
+int sequenSearch(char* string, char* substring) {
+    int count = 0;
     int res = -1;
-    n = strlen(str);
-    m = strlen(substring);
+    int size_str = strlen(string);
+    int size_substr = strlen(substring);
+    if (size_str == 0)
+    {
+        cout << "The string set incorrectly\n";
+    }
+    else if (size_substr == 0)
+    {
+        cout << "The substring set incorrectly\n";
+    }
+    else
+    {
+        for (int i = 0; i < size_str - size_substr + 1; i++) {
+            for (int j = 0; j < size_substr; j++) {
+                if (substring[j] != string[i + j])
+                {
+                    break;
+                }
+                else if (j == size_substr - 1) {
+                    res = i;
+                    count++;
+                    break;
+                }
+            }
+        }
+    }
+             
+    return count;
+}
+
+int BMXSearch(char* str, char* substring) {
+    int count = 0;
+    int res = -1;
+    int n = strlen(str);
+    int m = strlen(substring);
     if (n == 0)
     {
         cout << "The string set incorrectly\n";
@@ -19,38 +52,53 @@ int intDirectSearch(char* str, char* substring) {
         const int N = 255;
         int Slide[N];
         for (int i = 0; i < N; i++)
+        {
             Slide[i] = m;// таблица сдвигов заполняется длинной образца
-        for (int l = 0; l < m - 1; l++)// в ТС 
+        }
+
+        for (int l = 0; l < m - 1; l++)
         {
             Slide[str[l]] = m - 1 - l;
         }
-        int i = m - 1;//позиция правого конца образца
+        int right = m - 1;//позиция правого конца образца
 
-        while (i <= (n - 1))// пока првый конец не достигнет правого конца строки
+        while (right <= (n - 1))// пока првый конец не достигнет правого конца строки
         {
             int k = 0;// количество совпавших символов
-            while (k <= m - 1 && str[m - 1 - k] == substring[i - k])// пока количество совпадений меньше образца и           
+            while (k <= m - 1 && str[m - 1 - k] == substring[right - k])
             {
                 k++;
             }
 
-            if (k == m)                  // проверяем чего это из предыдущего цикла вывалилась программа- на совпадение 
-                return i - m + 1;          // если совпадение полное то  возвращаем  позицию первого совпавшего симовола в строке 
-
+            if (k == m)
+            {
+                return right - m + 1;          // если совпадение полное то  возвращаем  позицию первого совпавшего симовола в строке 
+            }
             else                       // если не все совпали 
             {
-                res = Slide[str[i]] - 1;
-                i = i + Slide[str[i]];    //  сдвигаем i(позиция правого конца шаблона) по таблице сдвигов
+                res = Slide[str[right]] - 1;
+                right = right + Slide[str[right]];    //  сдвигаем i(позиция правого конца шаблона) по таблице сдвигов    
             }
+            count++;
         }
     }
-    return res;
+    return count;
 }
 
 int main()
 {
-    char str[] = "daaga";
-    char substr[] = "aga";
-    cout << "Index of the first occurrence." << intDirectSearch(str, substr) << substr;
+    int size_str = 255;
+    char* str = new char[size_str];
+    cout << "Input string:";
+    cin.getline(str, size_str);
+
+    const int size_substr = 50;
+    char* substr = new char[size_substr];
+    cout << "Input substring:";
+    cin.getline(substr, size_substr);
+
+    cout << "Counting the number of character comparisons: " << sequenSearch(str, substr) << endl;
+    cout << "Counting the number of character comparisons: " << BMXSearch(str, substr) << endl;
+    delete str, substr;
     return 0;
 }

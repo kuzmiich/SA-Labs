@@ -1,20 +1,51 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <iterator>
+#include <sstream>
 #include <vector>
 #include <unordered_map>
 #include <map>
 #include "huffman.h"
 #include "lzw.h"
 using namespace std;
-string getString(vector<int> vect)
+
+string convert_to_string(vector<int> vect)
 {
-	string str = "";
+	string res;
 	for (int i = 0; i < vect.size(); i++)
 	{
-		str += vect[i];
+		res += vect[i];
 	}
-	return str;
+	return res;
+}
+string vector_to_str(vector<int> vect)
+{
+	ostringstream res;
+	if (!vect.empty())
+	{
+		// Convert all but the last element to avoid a trailing ","
+		copy(vect.begin(), vect.end() - 1, ostream_iterator<int>(res, ","));
+		// Now add the last element with no delimiter
+		res << vect.back();
+	}
+
+	return res.str();
+}
+
+void enterFile(string path, vector<int> vect)
+{
+	fstream fout(path, ios::out | ios::trunc);
+	if (!fout.is_open())
+	{
+		cout << "Error, file not open.";
+		exit(1);
+	}
+	for (int i = 0; i < vect.size(); i++)
+	{
+		fout << vect[i] << " ";
+	}
+	fout.close();
 }
 
 void enterFile(string path, string str)
@@ -44,7 +75,7 @@ string readFile(string path)
 	return value;
 }
 
-int filesize(string path) {
+long filesize(string path) {
 	fstream fin(path, ios::in);
 	if (!fin)
 	{
@@ -52,7 +83,7 @@ int filesize(string path) {
 		exit(1);
 	}
 	fin.seekg(0, ios::end);
-	int size = fin.tellg();
+	long size = fin.tellg();
 	fin.close();
 	return size;
 }
@@ -66,7 +97,7 @@ int main()
 	string path_src = "source.txt";
 
 	string raw = readFile(path_src);
-	cout << raw << endl;
+	cout << "Source text: " << raw << endl;
 	map<char, int> symbols;
 
 	//init
@@ -134,17 +165,20 @@ int main()
 	string path2 = "out2.txt";
 	string str = readFile(path_src);
 
-	cout << str << endl;
+	cout << "Source text: " << str << endl;
 
+	cout << "Coded:\n";
     vector<int> output_code = encoding(str);
 
-	enterFile(path2, getString(output_code));
+	cout << "Decoding: "; 
+	decoding(output_code);
+
+	enterFile(path2, output_code);
+
+	cout << endl;
 
 	cout << "Compression rate: " << compressionRate(path_src, path2) << endl;
 
-    decoding(output_code);
-
-	enterFile(path2, "Coded: " + getString(output_code));
-	enterFile(path2, "\nDecoded:" + decoding(output_code));
+	enterFile(path2, "Coded: " + vector_to_str(output_code) + "\nDecoded: " + convert_to_string(output_code));
     return 0;
 }

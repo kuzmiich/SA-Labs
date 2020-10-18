@@ -11,22 +11,24 @@ vector<int> encoding(string s1)
         ch += char(i);
         table[ch] = i;
     }
+
     string p = "", c = "";
+
     p += s1[0];
+
     int code = 256;
+
     vector<int> output_code;
 
     for (int i = 0; i < s1.length(); i++) {
-
         if (i != s1.length() - 1)
-
+        {
             c += s1[i + 1];
-
+        }
         if (table.find(p + c) != table.end()) {
             p = p + c;
         }
-        else 
-        {
+        else {
             cout << p << "\t" << table[p] << endl;
             output_code.push_back(table[p]);
             table[p + c] = code;
@@ -35,6 +37,7 @@ vector<int> encoding(string s1)
         }
         c = "";
     }
+    cout << p << "\t" << table[p] << endl;
 
     output_code.push_back(table[p]);
 
@@ -48,7 +51,7 @@ void output_vector(vector<int> code)
     }
 }
 
-string decoding(vector<int> op)
+void decoding(vector<int> op)
 {
     unordered_map<int, string> table;
 
@@ -63,7 +66,7 @@ string decoding(vector<int> op)
     string c = "";
     c += s[0];
 
-    // cout << s;
+    cout << s;
 
     int count = 256;
     for (int i = 0; i < op.size() - 1; i++)
@@ -76,7 +79,7 @@ string decoding(vector<int> op)
         else {
             s = table[n];
         }
-
+        cout << s;
         c = "";
         c += s[0];
 
@@ -85,7 +88,6 @@ string decoding(vector<int> op)
         old = n;
 
     }
-    return s;
 }
 #endif // !lzw
 
