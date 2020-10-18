@@ -131,12 +131,12 @@ int bfs_friendly_numbers(int start) { // O(V+E)
    * 2 3
    * 2 4
    * 3 4
-   */
+  */
 
 int main() {
     int n, m; // n - кол-во вершин, m - кол-во рёбер
     cin >> n >> m;
-
+    
     graph.assign(n, vector<int>());
     used.assign(n, false);
     
@@ -148,12 +148,13 @@ int main() {
         graph[u2 - 1].push_back(u1 - 1);
     }
     // 1
-    dfs(0);
+    dfs(4);
 
     used.assign(n, false);
     // 2
-    bfs(0);
+    bfs(4);
 
+    used.assign(n, false);
     dist.assign(n, 0);
 
     int d;
@@ -168,13 +169,10 @@ int main() {
     // 3
     bfs_dist(d);
     dist.assign(n, 0);
+    used.assign(n, false);
 
     // 4
     dfs_edit_graph(d);
-
-    used.assign(n, false);
-    
-    bfs(d);
 
     used.assign(n, false);
 
@@ -185,6 +183,10 @@ int main() {
     cout << "The average density count: " << *vertex / *edges << endl;
     // 5
     cout << "Friendly numbers: " << bfs_friendly_numbers(n);
+
+
+
+
     //чтобы пройти все компоненты связанности для несвязного графа
     //used.assign(n, false);
     //for (const auto& us : used) {
