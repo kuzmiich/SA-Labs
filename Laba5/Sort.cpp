@@ -21,6 +21,15 @@ void generate_arr(T* arr, int len)
 }
 //output array
 template<typename T>
+void rewrite_arr(T* new_arr, T* arr, T len)
+{
+	for (int i = 0; i < len; i++)
+	{
+		new_arr[i] = arr[i];
+	}
+}
+//output array
+template<typename T>
 void output_arr(T* arr, int len)
 {
 	for (int i = 0; i < len; i++)
@@ -44,7 +53,6 @@ void insert_sort(T* arr, int len)
 			arr[j + 1] = arr[j];
 			arr[j] = temp;
 			j--;
-
 			count++;
 		}
 		change++;
@@ -54,59 +62,66 @@ void insert_sort(T* arr, int len)
 	cout << "Count of change: " << change << endl;
 
 }
-template<typename T>
-void merge_sort(T* arr, int len)
+template <typename T>
+T* merge(T* buf1, T* buf2, int len_1, int len_2)
+{
+	T* res = new T[len_1 + len_2];
+	int n = 0;
+	// Сливаем массивы, пока один не закончится
+	while (len_1 && len_2) {
+		if (*buf1 < *buf2) {
+			res[n] = *buf1;
+			buf1++;
+			--len_1;
+		}
+		else {
+			res[n] = *buf2;
+			++buf2;
+			--len_2;
+		}
+		++n;
+	}
+	// Если закончился первый массив
+	if (len_1 == 0) {
+		for (int i = 0; i < len_2; ++i) {
+			res[n++] = *buf2++;
+		}
+	}
+	else { // Если закончился второй массив
+		for (int i = 0; i < len_1; ++i) {
+			res[n++] = *buf1++;
+		}
+	}
+	return res;
+}
+
+// Функция восходящего слияния
+template <typename T>
+void mergeSort(T* arr, int len)
 {
 	int count = 0, changes = 0;
-	int mid = len / 2;
-	if (len % 2 == 1)
-		mid++;
-	int h = 1; // step
-	int* sequence = new int[len];
-	int step;
-	while (h < len)
-	{
-		step = h;
-		int i = 0;   // индекс первого пути
-		int j = mid; // индекс второго пути
-		int k = 0;   // индекс элемента в результирующей последовательности
-		while (step <= mid)
-		{
-			while ((i < step) && (j < len) && (j < (mid + step)))
-			{ // пока не дошли до конца пути
-			  // заполняем следующий элемент формируемой последовательности
-			  // меньшим из двух просматриваемых
-				if (arr[i] < arr[j])
-				{
-					sequence[k] = arr[i];
-					i++; k++;
-				}
-				else {
-					sequence[k] = arr[j];
-					j++; k++;
-				}
-				count++;
+	int n = 1, k, ost;
+	T* buf;
+	while (n < len) {
+		k = 0;
+		while (k < len) {
+			if (k + n >= len)
+			{
+				break;
 			}
-			while (i < step)
-			{ // переписываем оставшиеся элементы первого пути (если второй кончился раньше)
-				sequence[k] = arr[i];
-				i++; k++;
-				count++;
+			ost = (k + n * 2 > len) ? (len - (k + n)) : n;
+
+			buf = merge(arr + k, arr + k + n, n, ost);
+			count += 2;
+			for (int i = 0; i < n + ost; ++i)
+			{
+				arr[k + i] = buf[i];
 			}
-			while ((j < (mid + step)) && (j < len))
-			{  // переписываем оставшиеся элементы второго пути (если первый кончился раньше)
-				sequence[k] = arr[j];
-				j++; k++;
-				count++;
-			}
-			step = step + h; // переходим к следующему этапу
-			
+			delete[] buf;
+			k += n * 2;
+			changes++;
 		}
-		h = h * 2;
-		// Переносим упорядоченную последовательность (промежуточный вариант) в исходный массив
-		for (i = 0; i < len; i++)
-			arr[i] = sequence[i];
-		changes++;
+		n *= 2;
 	}
 	cout << "Merge sorting:\n";
 	cout << "Count of operations: " << count << endl;
@@ -121,19 +136,25 @@ int main()
 	cout << "Input size of array: ";
 	len = input_num();
 	int* arr = new int[len];
-
 	generate_arr(arr, len);
-
 	output_arr(arr, len);
+
+	cout << "\n";
 
 	insert_sort(arr, len);
 
 	output_arr(arr, len);
-	cout << "\n\n";
-	merge_sort(arr, len);
 
-	output_arr(arr, len);
-	cout << "\n";
+	cout << "\n\n";
+
+	int* new_arr = new int[len];
+	rewrite_arr(new_arr, arr, len);
 	delete[] arr;
+	mergeSort(new_arr, len);
+
+	output_arr(new_arr, len);
+
+	cout << "\n";
+	delete[] new_arr;
 	return 0;
 }

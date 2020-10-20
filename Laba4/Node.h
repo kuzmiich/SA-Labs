@@ -1,7 +1,6 @@
-#ifndef Node
-#define myTree
+#ifndef tree
+#define tree
 
-#include <iostream>
 using namespace std;
 
 struct Node {
@@ -12,10 +11,9 @@ struct Node {
     /* utility that allocates a new Node with the given key  */
     static Node* newNode(int key)
     {
-        static Node* node = new Node;
-        node->key = key;
+        Node* node = new Node;
         node->left = node->right = NULL;
-
+        node->key = key;
         return node;
     }
     /* init start tree thanks to random numbers*/

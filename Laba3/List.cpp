@@ -9,11 +9,11 @@ struct List
 
 	List* next = nullptr; // Address field
 
-	static void add_element(List* lst_letter, char c)
+	static void add_element(List* lst_letter, char value)
 	{
         List* buf = new List;
         buf->next = NULL;
-        buf->letter = c;
+        buf->letter = value;
         if (lst_letter == NULL)
         {
             lst_letter = buf;

@@ -43,13 +43,6 @@ vector<int> encoding(string s1)
 
     return output_code;
 }
-void output_vector(vector<int> code)
-{
-    cout << "Output Codes are: ";
-    for (int i = 0; i < code.size(); i++) {
-        cout << code[i] << " ";
-    }
-}
 
 void decoding(vector<int> op)
 {

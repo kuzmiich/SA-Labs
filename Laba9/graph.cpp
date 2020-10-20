@@ -23,6 +23,7 @@ void dfs(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
 void bfs(int start) { // O(V+E)
     queue<int> q;
     q.push(start);
+    used[start - 1] = true;
     while (!q.empty()) {
         int u = q.front(); // достаём вершину, по рёбрам которой мы хоти пройтись
         q.pop(); // удаляем её из очереди, т.к. она больше не нужна
@@ -39,6 +40,7 @@ void bfs_dist(int start) { // O(V+E)
     queue<int> q;
     q.push(start);
     dist[start] = 0;
+    used[start - 1] = true;
     while (!q.empty()) {
         int u = q.front(); // достаём вершину, по рёбрам которой мы хоти пройтись
         q.pop(); // удаляем её из очереди, т.к. она больше не нужна
@@ -91,6 +93,7 @@ int bfs_friendly_numbers(int start) { // O(V+E)
     int answer = 0;
     queue<int> q;
     q.push(start);
+    used[start - 1] = true;
     dist[start] = 0;
     while (!q.empty()) {
         int u = q.front(); // достаём вершину, по рёбрам которой мы хоти пройтись
@@ -125,7 +128,7 @@ int bfs_friendly_numbers(int start) { // O(V+E)
   * Храним в векторе векторов
   */
   /*
-   * читаем m = 5 и n = 4
+   * читаем n = 4 и m = 5
    * 1 2
    * 1 4
    * 2 3
@@ -148,11 +151,11 @@ int main() {
         graph[u2 - 1].push_back(u1 - 1);
     }
     // 1
-    dfs(4);
+    dfs(0);
 
     used.assign(n, false);
     // 2
-    bfs(4);
+    bfs(0);
 
     used.assign(n, false);
     dist.assign(n, 0);
@@ -167,23 +170,22 @@ int main() {
         }
     }
     // 3
-    bfs_dist(d);
-    dist.assign(n, 0);
-    used.assign(n, false);
+    //bfs_dist(d);
+    //dist.assign(n, 0);
+    //used.assign(n, false);
 
-    // 4
-    dfs_edit_graph(d);
+    //// 4
+    //dfs_edit_graph(d);
 
-    used.assign(n, false);
+    //used.assign(n, false);
 
-    int* vertex = 0,* edges = 0;
-    dfs_density(0, vertex, edges);
+    //int* vertex = 0,* edges = 0;
+    //dfs_density(0, vertex, edges);
 
-    used.assign(n, false);
-    cout << "The average density count: " << *vertex / *edges << endl;
+    //used.assign(n, false);
+    //cout << "The average density count: " << *vertex / *edges << endl;
     // 5
     cout << "Friendly numbers: " << bfs_friendly_numbers(n);
-
 
 
 
