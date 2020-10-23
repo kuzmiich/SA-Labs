@@ -59,7 +59,7 @@ void bfs_dist(int start) { // O(V+E)
 void dfs_edit_graph(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
     used[start] = true; // При входе в вершину помечаем, что мы в неё вошли
     for (const auto& u : graph[start]) { // Обходим все рёбра этой вершины
-        graph[start][] = rand() % 10;
+        // graph[start][u] = rand() % 10;
         if (!used[u]) { // Если мы заходили в вершину раньше, то скипаем её, иначе заходим в неё
             dfs(u); // Запускаемся из этой вершины
         }
@@ -94,7 +94,7 @@ int bfs_friendly_numbers(int start) { // O(V+E)
     queue<int> q;
     q.push(start);
     used[start - 1] = true;
-    dist[start] = 0;
+    dist[start - 1] = 0;
     while (!q.empty()) {
         int u = q.front(); // достаём вершину, по рёбрам которой мы хоти пройтись
         q.pop(); // удаляем её из очереди, т.к. она больше не нужна
@@ -175,32 +175,33 @@ int main() {
             cout << i + 1 << ' ';
         }
     }
-
+    cout << '\n';
     dist.assign(n, 0);
     // 4
-    dfs_edit_graph(d);
+    // dfs_edit_graph(d);
 
     used.assign(n, false);
-
-    int* vertex = 0,* edges = 0;
-    dfs_density(0, *vertex, *edges);
+    int zero_vertex = 0, zero_adges = 0;
+    int * vertex = &zero_vertex,* edges = &zero_adges;
+    dfs_density(2, *vertex, *edges);
 
     used.assign(n, false);
-    cout << "The average density count: " << *vertex / *edges << endl;
+    cout << "The average density count: " << (double)*vertex / *edges << endl;
     // 5
     for (int i = 0; i < n; i++) {
-        check_friendly.push_back(rand() % 10);
+        check_friendly.push_back(rand() % 50);
     }
-     cout << "Friendly numbers: " << bfs_friendly_numbers(n);
+    cout << "Friendly numbers: " << bfs_friendly_numbers(n);
+
 
     // чтобы пройти все компоненты связанности для несвязного графа
-    used.assign(n, false);
-    for (const auto& us : used) {
-        if (!used[us]) // можно считать компоненты связанности
-        { 
-            dfs(us); 
-        }
-    }
+    //used.assign(n, false);
+    //for (const auto& us : used) {
+    //    if (!used[us]) // можно считать компоненты связанности
+    //    { 
+    //        dfs(us); 
+    //    }
+    //}
 
     return 0;
 }
