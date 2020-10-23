@@ -93,8 +93,8 @@ int bfs_friendly_numbers(int start) { // O(V+E)
     int answer = 0;
     queue<int> q;
     q.push(start);
-    used[start - 1] = true;
-    dist[start - 1] = 0;
+    used[start] = true;
+    dist[start] = 0;
     while (!q.empty()) {
         int u = q.front(); // достаём вершину, по рёбрам которой мы хоти пройтись
         q.pop(); // удаляем её из очереди, т.к. она больше не нужна
@@ -190,8 +190,9 @@ int main() {
     // 5
     for (int i = 0; i < n; i++) {
         check_friendly.push_back(rand() % 50);
+        cout << check_friendly[i] << " ";
     }
-    cout << "Friendly numbers: " << bfs_friendly_numbers(n);
+    cout << "Friendly numbers: " << bfs_friendly_numbers(n - 1);
 
 
     // чтобы пройти все компоненты связанности для несвязного графа
