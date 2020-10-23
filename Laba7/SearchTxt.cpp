@@ -20,6 +20,7 @@ int sequenSearch(char* string, char* substring) {
             for (int j = 0; j < size_substr; j++) {
                 if (substring[j] != string[i + j])
                 {
+                    count++;
                     break;
                 }
                 else if (j == size_substr - 1) {
@@ -67,6 +68,7 @@ int BMXSearch(char* str, char* substring) {
             int k = 0;// количество совпавших символов
             while (k <= m - 1 && str[m - 1 - k] == substring[right - k])
             {
+                count++;
                 k++;
             }
 

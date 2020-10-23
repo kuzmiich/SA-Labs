@@ -5,9 +5,9 @@
 using namespace std;
 
 vector<vector<int>> graph;
-vector<bool> used;
+vector<int> used;
 vector<int> dist; // Вектор в котором хранятся расстояния
-vector<int> check_friendly;
+vector<int> check_friendly{};
 
 // 1.Description of the function of the depth-first search algorithm
 void dfs(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
@@ -59,17 +59,17 @@ void bfs_dist(int start) { // O(V+E)
 void dfs_edit_graph(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
     used[start] = true; // При входе в вершину помечаем, что мы в неё вошли
     for (const auto& u : graph[start]) { // Обходим все рёбра этой вершины
-        graph[start][u] = rand() % 10;
+        graph[start][] = rand() % 10;
         if (!used[u]) { // Если мы заходили в вершину раньше, то скипаем её, иначе заходим в неё
             dfs(u); // Запускаемся из этой вершины
         }
     }
 }
-void dfs_density(int start, int* vertex, int* edges) {
-    *(vertex)++;
+void dfs_density(int start, int& vertex, int& edges) {
+    vertex++;
     used[start] = true; // При входе в вершину помечаем, что мы в неё вошли
     for (const auto& u : graph[start]) { // Обходим все рёбра этой вершины
-        *(edges)++;
+        edges++;
         if (!used[u]) { // Если мы заходили в вершину раньше, то скипаем её, иначе заходим в неё
             dfs_density(u, vertex, edges); // Запускаемся из этой вершины
         }
@@ -129,6 +129,7 @@ int bfs_friendly_numbers(int start) { // O(V+E)
   */
   /*
    * читаем n = 4 и m = 5
+   * 4 5
    * 1 2
    * 1 4
    * 2 3
@@ -138,6 +139,7 @@ int bfs_friendly_numbers(int start) { // O(V+E)
 
 int main() {
     int n, m; // n - кол-во вершин, m - кол-во рёбер
+    cout << "Input the number of vertices - n and number of edges - m:\n";
     cin >> n >> m;
     
     graph.assign(n, vector<int>());
@@ -151,52 +153,54 @@ int main() {
         graph[u2 - 1].push_back(u1 - 1);
     }
     // 1
-    dfs(0);
+    dfs(3);
 
     used.assign(n, false);
     // 2
-    bfs(0);
+    bfs(3);
 
     used.assign(n, false);
     dist.assign(n, 0);
 
+    // 3
     int d;
     cout << "Input number tops: ";
     cin >> d;
+    bfs_dist(d);
+    used.assign(n, false);
+
     cout << "Out number top: ";
     for (int i = 0; i < dist.size(); ++i) {
         if (dist[i] == d) { // если расстояние d выводим номер этой вершины
             cout << i + 1 << ' ';
         }
     }
-    // 3
-    //bfs_dist(d);
-    //dist.assign(n, 0);
-    //used.assign(n, false);
 
-    //// 4
-    //dfs_edit_graph(d);
+    dist.assign(n, 0);
+    // 4
+    dfs_edit_graph(d);
 
-    //used.assign(n, false);
+    used.assign(n, false);
 
-    //int* vertex = 0,* edges = 0;
-    //dfs_density(0, vertex, edges);
+    int* vertex = 0,* edges = 0;
+    dfs_density(0, *vertex, *edges);
 
-    //used.assign(n, false);
-    //cout << "The average density count: " << *vertex / *edges << endl;
+    used.assign(n, false);
+    cout << "The average density count: " << *vertex / *edges << endl;
     // 5
-    cout << "Friendly numbers: " << bfs_friendly_numbers(n);
+    for (int i = 0; i < n; i++) {
+        check_friendly.push_back(rand() % 10);
+    }
+     cout << "Friendly numbers: " << bfs_friendly_numbers(n);
 
-
-
-    //чтобы пройти все компоненты связанности для несвязного графа
-    //used.assign(n, false);
-    //for (const auto& us : used) {
-    //    if (!used[us]) // можно считать компоненты связанности
-    //    { 
-    //        dfs(us); 
-    //    }
-    //}
+    // чтобы пройти все компоненты связанности для несвязного графа
+    used.assign(n, false);
+    for (const auto& us : used) {
+        if (!used[us]) // можно считать компоненты связанности
+        { 
+            dfs(us); 
+        }
+    }
 
     return 0;
 }

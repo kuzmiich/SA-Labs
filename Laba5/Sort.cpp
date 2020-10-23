@@ -59,7 +59,7 @@ void insert_sort(T* arr, int len)
 	}
 	cout << "\nInsert sorting:\n";
 	cout << "Count of operations: " << count << endl;
-	cout << "Count of change: " << change << endl;
+	cout << "Count of changes: " << change << endl;
 
 }
 template <typename T>
@@ -112,7 +112,7 @@ void mergeSort(T* arr, int len)
 			ost = (k + n * 2 > len) ? (len - (k + n)) : n;
 
 			buf = merge(arr + k, arr + k + n, n, ost);
-			count += 2;
+			count += 2 * n * ost;
 			for (int i = 0; i < n + ost; ++i)
 			{
 				arr[k + i] = buf[i];
@@ -125,7 +125,7 @@ void mergeSort(T* arr, int len)
 	}
 	cout << "Merge sorting:\n";
 	cout << "Count of operations: " << count << endl;
-	cout << "Count of change: " << changes << endl;
+	cout << "Count of changes: " << changes << endl;
 }
 
 //sort insert and sort merge

@@ -98,11 +98,13 @@ int max_of_binary(T* arr, int len)
 		}
 	}
 
-	if (flag)
+	if (flag) {
 		cout << "Index element in absolute value " << max << " in array = " << mid << endl;
+	}
 	else
+	{
 		cout << "Sorry, but there is no such element in the array\n";
-
+	}
 	cout << "Count of iterations: " << count << endl;
 	return mid;
 }
@@ -132,7 +134,7 @@ int main()
 
 	if (binary != sequen)
 	{
-		cout << "Binary search work false";
+		cout << "Binary search work false\n";
 	}
 	delete[] arr;
 	return 0;
