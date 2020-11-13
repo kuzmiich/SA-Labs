@@ -33,7 +33,7 @@ string vector_to_str(vector<int> vect)
 	return res.str();
 }
 
-void enterFile(string path, vector<int> vect)
+void enter_file(string path, vector<int> vect)
 {
 	fstream fout(path, ios::out | ios::trunc);
 	if (!fout.is_open())
@@ -48,7 +48,7 @@ void enterFile(string path, vector<int> vect)
 	fout.close();
 }
 
-void enterFile(string path, string str)
+void enter_file(string path, string str)
 {
 	fstream fout(path, ios::out | ios::trunc);
 	if (!fout.is_open())
@@ -154,19 +154,21 @@ int main()
 			out += table[raw[i]][j] + '0';
 		}
 	}
-	string path1 = "out1.txt";
+	string path1 = "out1.bat";
 
 	// decode
 	map<vector<bool>, char> ftable;
 	for (auto i = table.begin(); i != table.end(); i++)
+	{
 		ftable[i->second] = i->first;
+	}
 
-	enterFile(path1, out);
+	enter_file(path1, out);
 
 	cout << "Compression rate: " << compression_rate(path_src, path1) << endl;
 
     //------------------------~ LWZ ~------------------------------
-	string path2 = "out2.txt";
+	string path2 = "out2.bat";
 	string str = readFile(path_src);
 
 	cout << "Source text: " << str << endl;
@@ -177,7 +179,7 @@ int main()
 	cout << "Decoded: "; 
 	decoding(output_code);
 
-	enterFile(path2, output_code);
+	enter_file(path2, output_code);
 
 	cout << endl;
 
