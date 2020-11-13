@@ -43,7 +43,7 @@ void enterFile(string path, vector<int> vect)
 	}
 	for (int i = 0; i < vect.size(); i++)
 	{
-		fout << vect[i] << " ";
+		fout << vect[i];
 	}
 	fout.close();
 }
@@ -67,7 +67,7 @@ string readFile(string path)
 	if (!fout.is_open())
 	{
 		cout << "Error, file not open.\n";
-		return "";
+		exit(1);
 	}
 	getline(fout, value);
 	fout.close();
@@ -88,8 +88,8 @@ long filesize(string path) {
 	return size;
 }
 
-double compressionRate(string path1, string path2) {
-	return (double)filesize(path2) / filesize(path1);
+double compression_rate(string path1, string path2) {
+	return (double)filesize(path1) / filesize(path2);// no compression data / compression data
 }
 
 int main()
@@ -102,7 +102,9 @@ int main()
 
 	//init
 	for (int i = 0; i < raw.length(); i++)
+	{
 		symbols[raw[i]]++;
+	}
 	//!init
 
 	list<Huf*> trees;
@@ -137,17 +139,21 @@ int main()
 	{
 		cout << itr->first << " - ";
 		for (int j = 0; j < table[itr->first].size(); j++)
+		{
 			cout << table[itr->first][j];
+		}
 		cout << endl;
 	}
 
 	// print coded string
 	string out = "";
 	for (int i = 0; i < raw.length(); i++)
+	{
 		for (int j = 0; j < table[raw[i]].size(); j++)
 		{
 			out += table[raw[i]][j] + '0';
 		}
+	}
 	string path1 = "out1.txt";
 
 	// decode
@@ -157,9 +163,7 @@ int main()
 
 	enterFile(path1, out);
 
-	cout << "Compression rate: " << compressionRate(path_src, path1) << endl;
-
-	enterFile(path1, out + "\n" + Decode(out, ftable));
+	cout << "Compression rate: " << compression_rate(path_src, path1) << endl;
 
     //------------------------~ LWZ ~------------------------------
 	string path2 = "out2.txt";
@@ -170,15 +174,14 @@ int main()
 	cout << "Coded:\n";
     vector<int> output_code = encoding(str);
 
-	cout << "Decoding: "; 
+	cout << "Decoded: "; 
 	decoding(output_code);
 
 	enterFile(path2, output_code);
 
 	cout << endl;
 
-	cout << "Compression rate: " << compressionRate(path_src, path2) << endl;
+	cout << "Compression rate: " << compression_rate(path_src, path2) << endl;
 
-	enterFile(path2, "Coded: " + vector_to_str(output_code) + "\nDecoded: " + convert_to_string(output_code));
     return 0;
 }

@@ -9,7 +9,7 @@ vector<int> used;
 vector<int> dist; // Вектор в котором хранятся расстояния
 vector<int> check_friendly{};
 
-// 1.Description of the function of the depth-first search algorithm
+// 1.Описание функции алгоритма глубинного поиска
 void dfs(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
     used[start] = true; // При входе в вершину помечаем, что мы в неё вошли
     for (const auto& u : graph[start]) { // Обходим все рёбра этой вершины
@@ -19,7 +19,7 @@ void dfs(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
     }
 }
 
-// 2.Graph traversal algorithm based on breadth - first search
+// 2.Алгоритм обхода графа, основанный на поиске в ширину
 void bfs(int start) { // O(V+E)
     queue<int> q;
     q.push(start);
@@ -35,7 +35,7 @@ void bfs(int start) { // O(V+E)
         }
     }
 }
-// 3.Defines all vertices of the graph that are at a fixed distance d from this vertex.
+// 3.Определяет все вершины графа, находящиеся на фиксированном расстоянии d от этой вершины.
 void bfs_dist(int start) { // O(V+E)
     queue<int> q;
     q.push(start);
@@ -53,18 +53,9 @@ void bfs_dist(int start) { // O(V+E)
         }
     }
 }
-// 4.Renumber the vertices of the graph in the order of depth traversal and
-// calculate the average density of the graph as a quotient of the number of its edges divided by the number of vertices
+// 4.Перенумеруйте вершины графа в порядке обхода глубины и
+// вычислите среднюю плотность графа как частное от числа его ребер, деленное на число вершин
 
-void dfs_edit_graph(int start) { // O(V+E), где V - количество вершин, E - количество рёбер
-    used[start] = true; // При входе в вершину помечаем, что мы в неё вошли
-    for (const auto& u : graph[start]) { // Обходим все рёбра этой вершины
-        // graph[start][u] = rand() % 10;
-        if (!used[u]) { // Если мы заходили в вершину раньше, то скипаем её, иначе заходим в неё
-            dfs(u); // Запускаемся из этой вершины
-        }
-    }
-}
 void dfs_density(int start, int& vertex, int& edges) {
     vertex++;
     used[start] = true; // При входе в вершину помечаем, что мы в неё вошли
@@ -75,7 +66,7 @@ void dfs_density(int start, int& vertex, int& edges) {
         }
     }
 }
-// 5.The number of pairs of friendly numbers in the graph vertices that are connected by edges
+// 5.Число пар дружественных чисел в вершинах графа, Соединенных ребрами
 long long sum_of_divs(long long x) {
     long long sum = 0;
     for (int i = 1; i < x / 2 + 1; ++i) {
@@ -177,9 +168,8 @@ int main() {
     }
     cout << '\n';
     dist.assign(n, 0);
-    // 4
-    // dfs_edit_graph(d);
 
+    // 4
     used.assign(n, false);
     int zero_vertex = 0, zero_adges = 0;
     int * vertex = &zero_vertex,* edges = &zero_adges;
