@@ -62,17 +62,22 @@ void enter_file(string path, string str)
 
 string readFile(string path)
 {
-	string value;
-	fstream fout(path, ios::in);
-	if (!fout.is_open())
+	fstream fin(path, ios::in);
+	if (!fin.is_open())
 	{
 		cout << "Error, file not open.\n";
 		exit(1);
 	}
-	getline(fout, value);
-	fout.close();
-
-	return value;
+	string data = "";
+	while (fin)
+	{
+		//string str;
+		getline(fin, data);
+		//data += str;
+	}
+	cout << endl;
+	fin.close();
+	return data;
 }
 
 long filesize(string path) {
@@ -154,7 +159,7 @@ int main()
 			out += table[raw[i]][j] + '0';
 		}
 	}
-	string path1 = "out1.bat";
+	string path1 = "out1.txt";
 
 	// decode
 	map<vector<bool>, char> ftable;
@@ -168,7 +173,7 @@ int main()
 	cout << "Compression rate: " << compression_rate(path_src, path1) << endl;
 
     //------------------------~ LWZ ~------------------------------
-	string path2 = "out2.bat";
+	string path2 = "out2.txt";
 	string str = readFile(path_src);
 
 	cout << "Source text: " << str << endl;
